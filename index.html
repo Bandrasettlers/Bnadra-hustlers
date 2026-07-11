@@ -242,7 +242,7 @@
                     </div>
                     <div class="deal-text" id="deal-text">UPDATING VIP BADGE METADATA...</div>
                 </div>
-                <a href="#" class="launcher-btn" onclick="launchGame(event)">ENTER UNIVERSE</a>
+                <a href="#" class="launcher-btn" onclick="launchGame(event)">ENTER</a>
             </div>
         </div>
     </div>
@@ -395,11 +395,68 @@
         };
 
         const DATA = [
-            { name: "LUDO RUNNERS", game: "ludo", title: "LUDO", type: "TOY WORLD ECOSYSTEM", desc: "A high-octane traversal sandbox arena. Guide living wood pawns through localized grid loops, drop color-bomb obstacles along traffic coordinates, and detonate golden six explosions to win.", src: 'https://fifth-gentle-45902158.figma.site/_components/v2/4de492f6d9cf8244ad5293233e5c6f52407d42fc/2.b977faab.png', bg: '#0D4F2C', ring1: '#00ff66', ring2: '#ffaa00', vendor: 'PALI HILL ENERGY', deal: 'FREE LUDO PASS MATCH REFILL', stickKey: 'ludo' },
-            { name: "BANDRA SETTLERS", game: "catan", title: "CATAN", type: "BOARD STRATEGY MATRIX", desc: "Monopolize neighborhood trade routes. Barter golden wheat layers, capture premium territory plots, and deploy physical wood guardian blocks to cut off your opponents.", src: 'https://fifth-gentle-45902158.figma.site/_components/v2/4de492f6d9cf8244ad5293233e5c6f52407d42fc/1.02464a56.png', bg: '#8A251A', ring1: '#FF0055', ring2: '#00F0FF', vendor: 'SUBWAY CARTER', deal: 'BOGO CHAI SHAKE // CODE: HUSTLE', stickKey: 'catan' },
-            { name: "MAYANAGRI CRAFT", game: "sandbox", title: "CRAFT", type: "VOXEL FANTASY CANVAS", desc: "Forge an original block world from the ground up. Mine glowing crystal shards with specialized pickaxes, summon block elemental spirits, and structure immense property grids.", src: 'https://fifth-gentle-45902158.figma.site/_components/v2/4de492f6d9cf8244ad5293233e5c6f52407d42fc/3.4df853b4.png', bg: '#581B82', ring1: '#FFFF00', ring2: '#FF00FF', vendor: 'KICKSTART CAFE', deal: 'FLAT 30% OFF NITRO COLD BREWS', stickKey: 'sandbox' },
-            { name: "BANDRA BUZZ", game: "guide", title: "BUZZ", type: "CYBER HUB TERMINAL", desc: "The ultimate premium directory platform. Crack open golden loot vaults, secure high-value holographic coupons, and claim limited rewards from the neighborhood's elite merchants.", src: 'https://fifth-gentle-45902158.figma.site/_components/v2/4de492f6d9cf8244ad5293233e5c6f52407d42fc/4.4457fbce.png', bg: '#134770', ring1: '#00FFFF', ring2: '#FFFFFF', vendor: 'ELITE MERCHANDISE', deal: 'SECRET MYSTERY VAULT IS LIVE', stickKey: 'guide' }
-        ];
+
+{
+    name: "WEBTOON WORLD",
+    game: "webtoons",
+    title: "READ",
+    type: "DIGITAL COMICS UNIVERSE",
+    desc: "Dive into trending webtoons, manga, indie comics and original graphic stories. Explore new episodes, discover creators and experience immersive storytelling from around the world.",
+    src: "https://fifth-gentle-45902158.figma.site/_components/v2/4de492f6d9cf8244ad5293233e5c6f52407d42fc/2.b977faab.png",
+    bg: "#0D4F2C",
+    ring1: "#00ff66",
+    ring2: "#ffaa00",
+    vendor: "TRENDING SERIES",
+    deal: "NEW CHAPTERS EVERY WEEK",
+    stickKey: "ludo"
+},
+
+{
+    name: "RETRO ARCADE",
+    game: "games",
+    title: "PLAY",
+    type: "CLASSIC GAMES COLLECTION",
+    desc: "Relive the golden age of gaming with Snake, Chess, Pac-Man, Sudoku, Road Rage and Ludo. Instant browser gameplay with zero downloads and pure nostalgia.",
+    src: "https://fifth-gentle-45902158.figma.site/_components/v2/4de492f6d9cf8244ad5293233e5c6f52407d42fc/1.02464a56.png",
+    bg: "#8A251A",
+    ring1: "#FF0055",
+    ring2: "#00F0FF",
+    vendor: "6 PLAYABLE GAMES",
+    deal: "NO DOWNLOADS • PLAY INSTANTLY",
+    stickKey: "catan"
+},
+
+{
+    name: "BANDRA DEALS",
+    game: "deals",
+    title: "SAVE",
+    type: "LOCAL OFFERS MARKETPLACE",
+    desc: "Unlock exclusive food offers, shopping discounts, hidden café specials and premium local deals from businesses across Bandra.",
+    src: "https://fifth-gentle-45902158.figma.site/_components/v2/4de492f6d9cf8244ad5293233e5c6f52407d42fc/3.4df853b4.png",
+    bg: "#581B82",
+    ring1: "#FFFF00",
+    ring2: "#FF00FF",
+    vendor: "LOCAL BUSINESSES",
+    deal: "FRESH DEALS UPDATED DAILY",
+    stickKey: "sandbox"
+},
+
+{
+    name: "COMING SOON",
+    game: "docs",
+    title: "NEXT",
+    type: "BANDRA HUSTLERS ECOSYSTEM",
+    desc: "The journey has just begun. More games, exclusive webtoons, creator tools, community features and exciting experiences are arriving soon.",
+    src: "https://fifth-gentle-45902158.figma.site/_components/v2/4de492f6d9cf8244ad5293233e5c6f52407d42fc/4.4457fbce.png",
+    bg: "#134770",
+    ring1: "#00FFFF",
+    ring2: "#FFFFFF",
+    vendor: "VERSION 1.0",
+    deal: "MORE EXPERIENCES COMING SOON",
+    stickKey: "guide"
+}
+
+];
 
         let activeIndex = 0, isAnimating = false;
         const root = document.getElementById('app-root'), stage = document.getElementById('stage'), stickerLayer = document.getElementById('sticker-layer');
@@ -441,7 +498,7 @@
 
         function renderAAADioramaPods(key) {
             stickerLayer.innerHTML = '';
-            const models = DIORAMAS[key];
+            const models = DIORAMAS[key] || DIORAMAS.ludo;
             
             // Explicit Curated Layout Configurations: Left, Top-Right, Bottom-Right
             const layouts = [
@@ -482,11 +539,25 @@
             setTimeout(() => { isAnimating = false; }, 900);
         }
 
-        function launchGame(e) {
-            e.preventDefault();
-            alert(`Booting Modular Game Environment Engine: [${DATA[activeIndex].game.toUpperCase()}]`);
-        }
+        function launchGame(e){
 
+    e.preventDefault();
+
+    const pages = [
+
+        "webtoons/",
+
+        "games/",
+
+        "deals/",
+
+        "docs/"
+
+    ];
+
+    window.location.href = pages[activeIndex];
+
+}
         let audioCtx = null;
         function toggleMusic() {
             if (!audioCtx) {

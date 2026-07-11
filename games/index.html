@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Retro Arcade | Bandra Hustlers</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+:root{
+
+--bg:#050505;
+--card:#141414;
+--glass:rgba(255,255,255,.06);
+
+--green:#00ff99;
+--cyan:#00d4ff;
+--yellow:#ffd500;
+--pink:#ff2e92;
+--purple:#8b5cf6;
+
+--text:#ffffff;
+--muted:#b5b5b5;
+
+}
+
+body{
+
+background:var(--bg);
+
+font-family:Inter,sans-serif;
+
+color:white;
+
+overflow-x:hidden;
+
+}
+
+/* ====================== */
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+left:0;
+top:0;
+
+width:100%;
+height:100%;
+
+background:
+
+radial-gradient(circle at 20% 20%,rgba(0,255,153,.08),transparent 40%),
+
+radial-gradient(circle at 80% 10%,rgba(255,46,146,.10),transparent 35%),
+
+radial-gradient(circle at 70% 70%,rgba(0,212,255,.08),transparent 35%),
+
+linear-gradient(#050505,#090909);
+
+z-index:-5;
+
+}
+
+/* ====================== */
+
+.grid{
+
+position:fixed;
+
+left:0;
+
+bottom:0;
+
+width:100%;
+
+height:45vh;
+
+background-image:
+
+linear-gradient(rgba(0,255,153,.15) 1px,transparent 1px),
+
+linear-gradient(90deg,rgba(0,255,153,.15) 1px,transparent 1px);
+
+background-size:60px 60px;
+
+transform:
+
+perspective(400px)
+
+rotateX(75deg);
+
+transform-origin:bottom;
+
+animation:gridMove 8s linear infinite;
+
+opacity:.35;
+
+z-index:-4;
+
+}
+
+@keyframes gridMove{
+
+from{
+
+background-position:0 0;
+
+}
+
+to{
+
+background-position:0 60px;
+
+}
+
+}
+
+/* ====================== */
+
+.scanlines{
+
+position:fixed;
+
+left:0;
+top:0;
+
+width:100%;
+height:100%;
+
+pointer-events:none;
+
+background:
+
+repeating-linear-gradient(
+
+to bottom,
+
+transparent 0px,
+
+transparent 3px,
+
+rgba(255,255,255,.02) 4px
+
+);
+
+opacity:.45;
+
+animation:scan 8s linear infinite;
+
+z-index:999;
+
+}
+
+@keyframes scan{
+
+from{
+
+transform:translateY(0);
+
+}
+
+to{
+
+transform:translateY(12px);
+
+}
+
+}
+
+/* ====================== */
+
+header{
+
+position:sticky;
+
+top:0;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:22px 60px;
+
+background:rgba(0,0,0,.45);
+
+backdrop-filter:blur(16px);
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
+z-index:100;
+
+}
+
+.logo{
+
+font-family:Orbitron;
+
+font-size:34px;
+
+font-weight:900;
+
+letter-spacing:3px;
+
+color:var(--green);
+
+text-shadow:
+
+0 0 15px var(--green);
+
+}
+
+nav{
+
+display:flex;
+
+gap:32px;
+
+}
+
+nav a{
+
+color:white;
+
+text-decoration:none;
+
+font-weight:600;
+
+transition:.35s;
+
+}
+
+nav a:hover{
+
+color:var(--green);
+
+text-shadow:
+
+0 0 10px var(--green);
+
+}
+
+.music{
+
+padding:12px 24px;
+
+border-radius:50px;
+
+background:var(--glass);
+
+border:1px solid rgba(255,255,255,.08);
+
+cursor:pointer;
+
+transition:.35s;
+
+}
+
+.music:hover{
+
+background:var(--green);
+
+color:black;
+
+}
+
+/* ====================== */
+
+.hero{
+
+min-height:92vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+flex-direction:column;
+
+text-align:center;
+
+padding:40px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.hero h1{
+
+font-family:Anton;
+
+font-size:120px;
+
+letter-spacing:5px;
+
+line-height:1;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+var(--green),
+
+var(--cyan),
+
+var(--pink)
+
+);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+animation:glow 4s infinite alternate;
+
+}
+
+@keyframes glow{
+
+from{
+
+filter:drop-shadow(0 0 15px var(--green));
+
+}
+
+to{
+
+filter:drop-shadow(0 0 35px var(--cyan));
+
+}
+
+}
+
+.hero h2{
+
+margin-top:18px;
+
+font-size:28px;
+
+color:#ddd;
+
+font-weight:400;
+
+}
+
+.hero p{
+
+margin-top:24px;
+
+max-width:760px;
+
+line-height:1.8;
+
+font-size:18px;
+
+color:var(--muted);
+
+}
+
+.hero-buttons{
+
+display:flex;
+
+gap:20px;
+
+margin-top:45px;
+
+flex-wrap:wrap;
+
+}
+
+.btn{
+
+padding:18px 36px;
+
+border-radius:60px;
+
+text-decoration:none;
+
+font-weight:700;
+
+transition:.35s;
+
+}
+
+.play{
+
+background:var(--green);
+
+color:black;
+
+}
+
+.play:hover{
+
+transform:translateY(-5px);
+
+box-shadow:
+
+0 0 35px var(--green);
+
+}
+
+.games{
+
+background:transparent;
+
+border:2px solid white;
+
+color:white;
+
+}
+
+.games:hover{
+
+background:white;
+
+color:black;
+
+}
+
+/* ==============================
+   FLOATING PARTICLES
+================================= */
+
+.particles{
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+overflow:hidden;
+pointer-events:none;
+z-index:-3;
+}
+
+.particle{
+
+position:absolute;
+
+width:4px;
+height:4px;
+
+background:white;
+
+border-radius:50%;
+
+opacity:.7;
+
+animation:float linear infinite;
+
+}
+
+@keyframes float{
+
+0%{
+
+transform:
+translateY(110vh)
+translateX(0);
+
+opacity:0;
+
+}
+
+10%{
+
+opacity:1;
+
+}
+
+90%{
+
+opacity:1;
+
+}
+
+100%{
+
+transform:
+translateY(-20vh)
+translateX(120px);
+
+opacity:0;
+
+}
+
+}
+
+/* ==============================
+FEATURED SECTION
+================================= */
+
+.featured{
+
+width:92%;
+
+margin:auto;
+
+margin-top:40px;
+
+display:grid;
+
+grid-template-columns:
+1.3fr
+1fr;
+
+gap:40px;
+
+align-items:center;
+
+padding:50px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:35px;
+
+backdrop-filter:blur(18px);
+
+}
+
+.featured-image{
+
+height:420px;
+
+border-radius:28px;
+
+background:
+
+linear-gradient(
+135deg,
+#ffdd00,
+#ff8800,
+#ff2e92);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:180px;
+
+animation:pulse 5s infinite;
+
+overflow:hidden;
+
+}
+
+@keyframes pulse{
+
+50%{
+
+transform:scale(1.03);
+
+}
+
+}
+
+.featured-info h3{
+
+font-family:Orbitron;
+
+font-size:18px;
+
+letter-spacing:4px;
+
+color:var(--green);
+
+margin-bottom:18px;
+
+}
+
+.featured-info h1{
+
+font-family:Anton;
+
+font-size:72px;
+
+line-height:1;
+
+margin-bottom:20px;
+
+}
+
+.featured-info p{
+
+font-size:18px;
+
+line-height:1.9;
+
+color:#ccc;
+
+margin-bottom:35px;
+
+}
+
+.play-now{
+
+display:inline-block;
+
+padding:18px 40px;
+
+border-radius:50px;
+
+background:var(--green);
+
+color:black;
+
+font-weight:700;
+
+text-decoration:none;
+
+transition:.35s;
+
+}
+
+.play-now:hover{
+
+transform:translateY(-5px);
+
+box-shadow:
+
+0 0 35px var(--green);
+
+}
+
+/* ==============================
+SECTION TITLE
+================================= */
+
+.section{
+
+width:92%;
+
+margin:auto;
+
+margin-top:80px;
+
+}
+
+.section h2{
+
+font-family:Orbitron;
+
+font-size:40px;
+
+margin-bottom:35px;
+
+letter-spacing:3px;
+
+}
+
+/* ==============================
+GAME GRID
+================================= */
+
+.grid-games{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(260px,1fr));
+
+gap:30px;
+
+}
+
+.card{
+
+position:relative;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:28px;
+
+overflow:hidden;
+
+transition:.4s;
+
+cursor:pointer;
+
+}
+
+.card:hover{
+
+transform:
+translateY(-12px)
+scale(1.03);
+
+box-shadow:
+
+0 0 35px rgba(0,255,153,.35);
+
+}
+
+.cover{
+
+height:220px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:120px;
+
+background:
+
+linear-gradient(
+135deg,
+#151515,
+#252525);
+
+}
+
+.info{
+
+padding:28px;
+
+}
+
+.info h3{
+
+font-size:32px;
+
+margin-bottom:12px;
+
+}
+
+.info p{
+
+color:#bbb;
+
+line-height:1.7;
+
+margin-bottom:20px;
+
+}
+
+.play-btn{
+
+display:inline-block;
+
+padding:12px 28px;
+
+background:var(--green);
+
+color:black;
+
+border-radius:40px;
+
+font-weight:700;
+
+text-decoration:none;
+
+transition:.3s;
+
+}
+
+.play-btn:hover{
+
+transform:scale(1.08);
+
+}
+
+/* ==============================
+STATS
+================================= */
+
+.stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:30px;
+
+margin:80px auto;
+
+width:92%;
+
+}
+
+.stat{
+
+padding:40px;
+
+border-radius:25px;
+
+background:rgba(255,255,255,.04);
+
+text-align:center;
+
+}
+
+.stat h1{
+
+font-family:Anton;
+
+font-size:72px;
+
+color:var(--green);
+
+}
+
+.stat p{
+
+margin-top:10px;
+
+color:#bbb;
+
+}
+
+/* ==============================
+RESPONSIVE
+================================= */
+
+@media(max-width:900px){
+
+header{
+
+padding:20px;
+
+}
+
+nav{
+
+display:none;
+
+}
+
+.hero h1{
+
+font-size:70px;
+
+}
+
+.featured{
+
+grid-template-columns:1fr;
+
+}
+
+.stats{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<div class="scanlines"></div>
+
+<div class="particles" id="particles"></div>
+
+<header>
+
+<div class="logo">
+
+RETRO ARCADE
+
+</div>
+
+<nav>
+
+<a href="/">HOME</a>
+
+<a href="/webtoons/">WEBTOONS</a>
+
+<a href="/games/">GAMES</a>
+
+<a href="/deals/">DEALS</a>
+
+</nav>
+
+<div class="music">
+
+🎵 MUSIC
+
+</div>
+
+</header>
+
+<section class="hero">
+
+<h1>
+
+RETRO ARCADE
+
+</h1>
+
+<h2>
+
+LEVEL UP YOUR NOSTALGIA
+
+</h2>
+
+<p>
+
+Classic games reborn with modern visuals, smooth animations, neon lights and pure arcade vibes.
+
+</p>
+
+<div class="hero-buttons">
+
+<a href="#featured" class="btn play">
+
+▶ PLAY NOW
+
+</a>
+
+<a href="#games" class="btn games">
+
+VIEW GAMES
+
+</a>
+
+</div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- FEATURED GAME -->
+<!-- ===================================== -->
+
+<section class="featured" id="featured">
+
+<div class="featured-image">
+
+👾
+
+</div>
+
+<div class="featured-info">
+
+<h3>FEATURED GAME</h3>
+
+<h1>PAC-MAN</h1>
+
+<p>
+
+The king of arcade gaming returns.
+Navigate the maze, dodge ghosts,
+eat every pellet and chase high scores.
+
+Modern animations.
+Classic gameplay.
+Pure nostalgia.
+
+</p>
+
+<a href="pacman/" class="play-now">
+
+▶ PLAY PAC-MAN
+
+</a>
+
+</div>
+
+</section>
+
+
+<!-- ===================================== -->
+<!-- GAME LIBRARY -->
+<!-- ===================================== -->
+
+<section class="section" id="games">
+
+<h2>GAME LIBRARY</h2>
+
+<div class="grid-games">
+
+
+<!-- Snake -->
+
+<div class="card">
+
+<div class="cover">
+
+🐍
+
+</div>
+
+<div class="info">
+
+<h3>Snake</h3>
+
+<p>
+
+Grow longer.
+Move faster.
+Beat your own record.
+
+</p>
+
+<a href="snake/" class="play-btn">
+
+PLAY
+
+</a>
+
+</div>
+
+</div>
+
+
+
+<!-- Chess -->
+
+<div class="card">
+
+<div class="cover">
+
+♟️
+
+</div>
+
+<div class="info">
+
+<h3>Chess</h3>
+
+<p>
+
+Classic strategy.
+Challenge the computer.
+
+</p>
+
+<a href="chess/" class="play-btn">
+
+PLAY
+
+</a>
+
+</div>
+
+</div>
+
+
+
+<!-- Pacman -->
+
+<div class="card">
+
+<div class="cover">
+
+👾
+
+</div>
+
+<div class="info">
+
+<h3>Pac-Man</h3>
+
+<p>
+
+Eat every pellet.
+Escape every ghost.
+
+</p>
+
+<a href="pacman/" class="play-btn">
+
+PLAY
+
+</a>
+
+</div>
+
+</div>
+
+
+
+<!-- Sudoku -->
+
+<div class="card">
+
+<div class="cover">
+
+🧩
+
+</div>
+
+<div class="info">
+
+<h3>Sudoku</h3>
+
+<p>
+
+Relax.
+Think.
+Complete the puzzle.
+
+</p>
+
+<a href="sudoku/" class="play-btn">
+
+PLAY
+
+</a>
+
+</div>
+
+</div>
+
+
+
+<!-- Road Rage -->
+
+<div class="card">
+
+<div class="cover">
+
+🏍️
+
+</div>
+
+<div class="info">
+
+<h3>Road Rage</h3>
+
+<p>
+
+High speed.
+Heavy traffic.
+No brakes.
+
+</p>
+
+<a href="road-rage/" class="play-btn">
+
+PLAY
+
+</a>
+
+</div>
+
+</div>
+
+
+
+<!-- Ludo -->
+
+<div class="card">
+
+<div class="cover">
+
+🎲
+
+</div>
+
+<div class="info">
+
+<h3>Ludo</h3>
+
+<p>
+
+Play solo or with friends.
+
+Simple.
+
+Classic.
+
+Timeless.
+
+</p>
+
+<a href="ludo/" class="play-btn">
+
+PLAY
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ===================================== -->
+<!-- STATS -->
+<!-- ===================================== -->
+
+<section class="stats">
+
+<div class="stat">
+
+<h1>6</h1>
+
+<p>Playable Games</p>
+
+</div>
+
+<div class="stat">
+
+<h1>80's</h1>
+
+<p>Retro Arcade Vibes</p>
+
+</div>
+
+<div class="stat">
+
+<h1>∞</h1>
+
+<p>High Scores</p>
+
+</div>
+
+<div class="stat">
+
+<h1>24×7</h1>
+
+<p>Browser Gaming</p>
+
+</div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- FOOTER -->
+<!-- ===================================== -->
+
+<footer class="footer">
+
+<h2>INSERT COIN • KEEP PLAYING • LEVEL UP</h2>
+
+<p>
+
+Built with ❤️ by Bandra Hustlers
+
+</p>
+
+</footer>
+
+<style>
+
+.footer{
+
+margin-top:120px;
+
+padding:80px 20px;
+
+text-align:center;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+background:rgba(255,255,255,.03);
+
+}
+
+.footer h2{
+
+font-family:Orbitron;
+
+letter-spacing:4px;
+
+font-size:32px;
+
+margin-bottom:20px;
+
+color:var(--green);
+
+text-shadow:0 0 15px var(--green);
+
+}
+
+.footer p{
+
+color:#999;
+
+font-size:16px;
+
+}
+
+/* ==============================
+FLOATING BLOBS
+============================== */
+
+.blob{
+
+position:fixed;
+
+border-radius:50%;
+
+filter:blur(90px);
+
+opacity:.18;
+
+z-index:-2;
+
+animation:blobMove 20s ease-in-out infinite;
+
+}
+
+.blob.one{
+
+width:280px;
+
+height:280px;
+
+background:#00ff99;
+
+top:10%;
+
+left:5%;
+
+}
+
+.blob.two{
+
+width:350px;
+
+height:350px;
+
+background:#ff2e92;
+
+bottom:10%;
+
+right:8%;
+
+animation-delay:6s;
+
+}
+
+.blob.three{
+
+width:220px;
+
+height:220px;
+
+background:#00d4ff;
+
+left:45%;
+
+top:55%;
+
+animation-delay:12s;
+
+}
+
+@keyframes blobMove{
+
+0%,100%{
+
+transform:translate(0,0);
+
+}
+
+25%{
+
+transform:translate(80px,-50px);
+
+}
+
+50%{
+
+transform:translate(-60px,60px);
+
+}
+
+75%{
+
+transform:translate(40px,-40px);
+
+}
+
+}
+
+/* ==============================
+CARD ENTRY ANIMATION
+============================== */
+
+.card{
+
+opacity:0;
+
+transform:translateY(40px);
+
+animation:cardReveal .8s forwards;
+
+}
+
+.card:nth-child(1){animation-delay:.1s;}
+.card:nth-child(2){animation-delay:.2s;}
+.card:nth-child(3){animation-delay:.3s;}
+.card:nth-child(4){animation-delay:.4s;}
+.card:nth-child(5){animation-delay:.5s;}
+.card:nth-child(6){animation-delay:.6s;}
+
+@keyframes cardReveal{
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ==============================
+BUTTON GLOW
+============================== */
+
+.play-btn,
+.play-now{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.play-btn::before,
+.play-now::before{
+
+content:"";
+
+position:absolute;
+
+left:-120%;
+
+top:0;
+
+width:80%;
+
+height:100%;
+
+background:linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.55),
+
+transparent
+
+);
+
+transition:.6s;
+
+}
+
+.play-btn:hover::before,
+.play-now:hover::before{
+
+left:130%;
+
+}
+
+/* ==============================
+LOGO PULSE
+============================== */
+
+.logo{
+
+animation:logoPulse 3s infinite;
+
+}
+
+@keyframes logoPulse{
+
+50%{
+
+text-shadow:
+
+0 0 10px var(--green),
+
+0 0 25px var(--green),
+
+0 0 40px var(--green);
+
+}
+
+}
+
+/* ==============================
+HERO FLOAT
+============================== */
+
+.hero h1{
+
+animation:
+
+glow 4s infinite alternate,
+
+heroFloat 5s ease-in-out infinite;
+
+}
+
+@keyframes heroFloat{
+
+50%{
+
+transform:translateY(-8px);
+
+}
+
+}
+
+</style>
+
+<div class="blob one"></div>
+<div class="blob two"></div>
+<div class="blob three"></div>
+
+<script>
+
+const particleContainer=document.getElementById("particles");
+
+for(let i=0;i<90;i++){
+
+const p=document.createElement("div");
+
+p.className="particle";
+
+p.style.left=Math.random()*100+"%";
+
+p.style.animationDuration=
+(8+Math.random()*12)+"s";
+
+p.style.animationDelay=
+Math.random()*15+"s";
+
+p.style.opacity=Math.random();
+
+p.style.transform=
+"scale("+(0.5+Math.random()*2)+")";
+
+particleContainer.appendChild(p);
+
+}
+
+const music=document.querySelector(".music");
+
+music.onclick=()=>{
+
+music.innerHTML="🎵 MUSIC (COMING SOON)";
+
+music.style.background="#00ff99";
+
+music.style.color="#000";
+
+};
+};
+
+/* ===========================
+   PARALLAX HERO
+=========================== */
+
+document.addEventListener("mousemove",(e)=>{
+
+const x=(e.clientX/window.innerWidth-.5)*20;
+const y=(e.clientY/window.innerHeight-.5)*20;
+
+document.querySelector(".hero").style.transform=
+`translate(${x}px,${y}px)`;
+
+});
+
+/* ===========================
+   SMOOTH CARD HOVER
+=========================== */
+
+document.querySelectorAll(".card").forEach(card=>{
+
+card.addEventListener("mousemove",(e)=>{
+
+const rect=card.getBoundingClientRect();
+
+const x=e.clientX-rect.left;
+const y=e.clientY-rect.top;
+
+card.style.background=
+`radial-gradient(circle at ${x}px ${y}px,
+rgba(0,255,153,.18),
+rgba(255,255,255,.05) 45%)`;
+
+});
+
+card.addEventListener("mouseleave",()=>{
+
+card.style.background="rgba(255,255,255,.05)";
+
+});
+
+});
+
+/* ===========================
+   CUSTOM CURSOR
+=========================== */
+
+const cursor=document.createElement("div");
+
+cursor.style.position="fixed";
+cursor.style.width="18px";
+cursor.style.height="18px";
+cursor.style.borderRadius="50%";
+cursor.style.background="#00ff99";
+cursor.style.pointerEvents="none";
+cursor.style.boxShadow="0 0 20px #00ff99";
+cursor.style.zIndex="99999";
+cursor.style.transition="transform .08s linear";
+
+document.body.appendChild(cursor);
+
+document.addEventListener("mousemove",(e)=>{
+
+cursor.style.left=(e.clientX-9)+"px";
+cursor.style.top=(e.clientY-9)+"px";
+
+});
+
+/* ===========================
+   KEYBOARD SHORTCUTS
+=========================== */
+
+document.addEventListener("keydown",(e)=>{
+
+if(e.key==="1"){
+
+location.href="snake/";
+
+}
+
+if(e.key==="2"){
+
+location.href="chess/";
+
+}
+
+if(e.key==="3"){
+
+location.href="pacman/";
+
+}
+
+if(e.key==="4"){
+
+location.href="sudoku/";
+
+}
+
+if(e.key==="5"){
+
+location.href="road-rage/";
+
+}
+
+if(e.key==="6"){
+
+location.href="ludo/";
+
+}
+
+});
+
+/* ===========================
+   HERO FADE IN
+=========================== */
+
+window.addEventListener("load",()=>{
+
+document.body.animate(
+
+[
+{
+opacity:0
+},
+{
+opacity:1
+}
+],
+
+{
+duration:900,
+fill:"forwards"
+}
+
+);
+
+});
+
+</script>
+
+</body>
+
+</html>
