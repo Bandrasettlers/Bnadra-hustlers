@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BANDRA HUSTLE // AAA INTERACTIVE SYSTEM ARCHITECTURE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+    
+    <style>
+        :root {
+            --bg-current: #105B35;
+            --ring-1: #00ff66;
+            --ring-2: #ffaa00;
+            --glass-bg: rgba(9, 7, 16, 0.9);
+            --neon-glow: #00ff66;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            user-select: none; -webkit-user-drag: none;
+        }
+
+        body, html { 
+            width: 100%; height: 100vh; overflow: hidden; 
+            background-color: #020104; color: #fff;
+        }
+
+        .app-container {
+            position: relative; width: 100%; height: 100vh; overflow: hidden;
+            background-color: var(--bg-current);
+            transition: background-color 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .ambient-shading {
+            position: absolute; inset: 0; pointer-events: none; z-index: 50;
+            background: radial-gradient(circle at 50% 35%, transparent 15%, rgba(1, 0, 4, 0.75) 85%);
+            mix-blend-mode: multiply;
+        }
+
+        .grain-overlay {
+            position: absolute; inset: 0; pointer-events: none; z-index: 51; opacity: 0.15;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='0.12'/%3E%3C/svg%3E");
+        }
+
+        .audio-toggle {
+            position: absolute; top: 24px; right: 32px; z-index: 60;
+            background: rgba(255, 255, 255, 0.06); border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 26px; border-radius: 30px; color: white; font-size: 0.75rem;
+            font-weight: 900; cursor: pointer; backdrop-filter: blur(20px);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.4); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: 0.05em;
+        }
+        .audio-toggle:hover { background: #fff; color: #000; transform: scale(1.05); }
+
+        .ring-system {
+            position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%);
+            width: 68vh; height: 68vh; pointer-events: none; z-index: 2;
+        }
+        .neon-ring-outer {
+            position: absolute; inset: 0; border-radius: 50%;
+            border: 6px solid var(--ring-1);
+            box-shadow: 0 0 35px var(--ring-1), inset 0 0 20px var(--ring-1);
+            animation: ringPulse 2.2s infinite alternate ease-in-out, ringFlicker 0.18s infinite;
+        }
+        .neon-ring-inner {
+            position: absolute; inset: 24px; border-radius: 50%;
+            border: 4px solid var(--ring-2);
+            box-shadow: 0 0 45px var(--ring-2), inset 0 0 22px var(--ring-2);
+            animation: ringPulse 1.6s infinite alternate-reverse ease-in-out;
+        }
+
+        @keyframes ringPulse {
+            0% { transform: scale(0.98); filter: brightness(0.9); }
+            100% { transform: scale(1.03); filter: brightness(1.3); }
+        }
+        @keyframes ringFlicker {
+            0%, 100% { opacity: 1; }
+            33% { opacity: 0.95; }
+            64% { opacity: 0.98; }
+        }
+
+        .ring-nav-btn {
+            position: absolute; top: 42%; transform: translateY(-50%);
+            width: 76px; height: 76px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; z-index: 45;
+            display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ring-nav-btn:hover { 
+            background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.4); 
+            transform: translateY(-50%) scale(1.08); color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(255,255,255,0.15);
+        }
+        .ring-nav-left { left: calc(50% - 47vh); }
+        .ring-nav-right { right: calc(50% - 47vh); }
+        .ring-nav-btn svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 2.5; }
+
+        .ghost-text {
+            position: absolute; top: 5%; left: 50%; transform: translateX(-50%);
+            pointer-events: none; font-family: 'Anton', sans-serif; font-size: clamp(90px, 24vw, 340px);
+            font-weight: 900; color: rgba(255, 255, 255, 0.15); text-transform: uppercase; 
+            white-space: nowrap; z-index: 1; letter-spacing: -0.01em;
+        }
+
+        .stage-container { position: absolute; inset: 0; z-index: 3; perspective: 1800px; }
+        .character-wrapper {
+            position: absolute; aspect-ratio: 0.58 / 1; will-change: transform, filter, opacity;
+            transition: all 900ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .character-wrapper img { 
+            width: 100%; height: 100%; object-fit: contain; object-position: bottom center; 
+            animation: heroBreathing 5s infinite alternate ease-in-out;
+        }
+
+        @keyframes heroBreathing {
+            0% { transform: translateY(0) scale(1); filter: drop-shadow(0 20px 30px rgba(0,0,0,0.45)); }
+            100% { transform: translateY(-12px) scale(1.02); filter: drop-shadow(0 35px 60px rgba(0,0,0,0.65)) brightness(1.12); }
+        }
+
+        /* 3D Diorama Stage Container Plates */
+        .props-container { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+        
+        .aaa-diorama-card {
+            position: absolute; width: 260px; height: 260px;
+            will-change: transform, opacity;
+            transition: all 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Ambient Orbiting Animations with Micro Parallax Shifting */
+        @keyframes d-orbit-left {
+            0% { transform: translateY(0px) rotate(-2deg) scale(1); }
+            50% { transform: translateY(-15px) rotate(2deg) scale(1.03); }
+            100% { transform: translateY(0px) rotate(-2deg) scale(1); }
+        }
+        @keyframes d-orbit-topright {
+            0% { transform: translateY(0px) rotate(4deg) scale(1); }
+            50% { transform: translateY(-22px) rotate(-1deg) scale(1.04); }
+            100% { transform: translateY(0px) rotate(4deg) scale(1); }
+        }
+        @keyframes d-orbit-bottomright {
+            0% { transform: translateY(0px) rotate(-3deg) scale(1); }
+            50% { transform: translateY(12px) rotate(3deg) scale(0.97); }
+            100% { transform: translateY(0px) rotate(-3deg) scale(1); }
+        }
+
+        .role-center { left: 50%; bottom: 15%; height: 85%; transform: translateX(-50%) translateZ(150px); opacity: 1; z-index: 20; filter: blur(0); }
+        .role-left { left: 16%; bottom: 20%; height: 32%; transform: translateX(-50%) translateZ(-350px) rotateY(45deg); filter: blur(5px) grayscale(40%); opacity: 0.45; z-index: 10; }
+        .role-right { left: 84%; bottom: 20%; height: 32%; transform: translateX(-50%) translateZ(-350px) rotateY(-45deg); filter: blur(5px) grayscale(40%); opacity: 0.45; z-index: 10; }
+        .role-back { left: 50%; bottom: 24%; height: 18%; transform: translateX(-50%) translateZ(-800px); filter: blur(15px); opacity: 0.04; z-index: 5; }
+
+        .bottom-console {
+            position: absolute; bottom: 24px; left: 24px; right: 24px; z-index: 60;
+            background: var(--glass-bg); backdrop-filter: blur(45px) saturate(210%);
+            -webkit-backdrop-filter: blur(45px) saturate(210%);
+            border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 24px;
+            padding: 26px 40px; display: grid; grid-template-columns: 360px 1fr 400px;
+            gap: 40px; align-items: center;
+            box-shadow: 0 45px 90px rgba(0,0,0,0.9), inset 0 1px 2px rgba(255,255,255,0.2);
+        }
+
+        .ui-title { font-family: 'Anton', sans-serif; font-size: 2.8rem; color: #fff; line-height: 0.95; text-transform: uppercase; letter-spacing: 0.01em; }
+        .brand-meta { font-size: 0.72rem; font-weight: 900; color: var(--ring-2); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 8px; }
+        .ui-desc { font-size: 0.88rem; color: rgba(255, 255, 255, 0.75); line-height: 1.55; font-weight: 500; }
+
+        .console-right-panel { display: flex; flex-direction: column; gap: 14px; }
+        
+        .compact-deal-box {
+            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px dashed rgba(255, 255, 255, 0.22); border-radius: 12px; padding: 12px 18px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: relative; overflow: hidden;
+        }
+
+        .deal-vendor { font-size: 0.72rem; color: var(--ring-2); font-weight: 900; text-transform: uppercase; letter-spacing: 0.06em; }
+        .deal-text { font-size: 0.82rem; color: #fff; font-weight: 700; }
+
+        .launcher-btn {
+            width: 100%; background: #fff; color: #000; border: none; border-radius: 30px;
+            padding: 16px; font-family: 'Anton', sans-serif; font-size: 1.35rem;
+            letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; text-align: center; text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; justify-content: center;
+        }
+        .launcher-btn:hover { 
+            background: var(--neon-glow); transform: translateY(-3px); 
+            box-shadow: 0 12px 30px rgba(0,255,102,0.45);
+        }
+
+        @media (max-width: 1200px) {
+            .bottom-console { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
+            .ui-desc, .compact-deal-box { display: none; }
+            .ring-nav-btn { width: 64px; height: 64px; }
+            .ring-nav-left { left: 20px; } .ring-nav-right { right: 20px; }
+            .aaa-diorama-card { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container" id="app-root">
+        <div class="ambient-shading"></div>
+        <div class="grain-overlay"></div>
+        
+        <button class="audio-toggle" onclick="toggleMusic()"><span id="m-status">⚡ INITIALIZE SYSTEM AUDIO</span></button>
+        
+        <div class="ghost-text" id="ghost-title">LUDO</div>
+        
+        <div class="ring-system">
+            <div class="neon-ring-outer"></div>
+            <div class="neon-ring-inner"></div>
+        </div>
+
+        <button class="ring-nav-btn ring-nav-left" onclick="navigate('prev')" aria-label="Previous Frame">
+            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="ring-nav-btn ring-nav-right" onclick="navigate('next')" aria-label="Next Frame">
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="stage-container" id="stage"></div>
+        <div class="props-container" id="sticker-layer"></div>
+
+        <div class="bottom-console">
+            <div>
+                <div class="brand-meta" id="meta-type">TOY WORLD CHAOS</div>
+                <p class="ui-title" id="char-name">LUDO RUNNERS</p>
+            </div>
+
+            <div>
+                <p class="ui-desc" id="char-desc">Loading visual world engine ecosystems...</p>
+            </div>
+
+            <div class="console-right-panel">
+                <div class="compact-deal-box">
+                    <div>
+                        <div style="font-size: 0.55rem; opacity: 0.5; font-weight: 900; text-transform: uppercase;">REALTIME MARKET DROP</div>
+                        <div class="deal-vendor" id="deal-vendor">LOADING NODE</div>
+                    </div>
+                    <div class="deal-text" id="deal-text">UPDATING VIP BADGE METADATA...</div>
+                </div>
+                <a href="#" class="launcher-btn" onclick="launchGame(event)">ENTER UNIVERSE</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cinematic High-Poly 3D Diorama Blueprint Library
+        const DIORAMAS = {
+            ludo: [
+                // 1. LEFT DIORAMA: Tiny suburban road with running wooden pawn
+                `<svg viewBox="0 0 240 240">
+                    <defs>
+                        <linearGradient id="ludoGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2ecc71"/><stop offset="100%" stop-color="#27ae60"/></linearGradient>
+                        <linearGradient id="ludoAsphalt" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#34495e"/><stop offset="100%" stop-color="#2c3e50"/></linearGradient>
+                        <radialGradient id="pawnWood" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#f39c12"/><stop offset="100%" stop-color="#d35400"/></radialGradient>
+                    </defs>
+                    <polygon points="120,40 210,85 120,130 30,85" fill="url(#ludoGrass)" filter="drop-shadow(0 20px 25px rgba(0,0,0,0.5))"/>
+                    <polygon points="30,85 120,130 120,150 30,105" fill="#1e7e34"/>
+                    <polygon points="120,130 210,85 210,105 120,150" fill="#196f2e"/>
+                    <polygon points="60,100 120,70 180,100 120,130" fill="url(#ludoAsphalt)"/>
+                    <line x1="120" y1="70" x2="120" y2="130" stroke="#f1c40f" stroke-width="3" stroke-dasharray="6 4"/>
+                    <polygon points="160,95 165,80 170,95" fill="#e67e22"/><ellipse cx="165" cy="95" rx="8" ry="3" fill="#d35400"/>
+                    <ellipse cx="105" cy="112" rx="16" ry="6" fill="#000" opacity="0.4"/>
+                    <path d="M95 105 Q90 108 105 110 Q120 108 115 105 L110 82 Q115 72 105 72 Q95 72 100 82 Z" fill="url(#pawnWood)"/>
+                    <circle cx="105" cy="64" r="10" fill="url(#pawnWood)"/>
+                    <rect x="50" y="70" width="6" height="20" fill="#7f8c8d"/>
+                    <rect x="46" y="60" width="14" height="10" rx="3" fill="#e74c3c"/>
+                </svg>`,
+                // 2. TOP-RIGHT DIORAMA: Magical dice shrine sitting on a glowing tile
+                `<svg viewBox="0 0 240 240">
+                    <defs>
+                        <linearGradient id="tileGlow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9b59b6"/><stop offset="100%" stop-color="#8e44ad"/></linearGradient>
+                        <radialGradient id="diceCore" cx="30%" cy="30%" r="70%"><stop offset="0%" stop-color="#00ffff"/><stop offset="60%" stop-color="#2980b9"/><stop offset="100%" stop-color="#2c3e50"/></radialGradient>
+                    </defs>
+                    <polygon points="120,50 200,90 120,130 40,90" fill="url(#tileGlow)" filter="drop-shadow(0 25px 30px rgba(142,68,173,0.4))"/>
+                    <polygon points="40,90 120,130 120,148 40,108" fill="#6d3284"/>
+                    <polygon points="120,130 200,90 200,108 120,148" fill="#5b2770"/>
+                    <ellipse cx="120" cy="90" rx="55" ry="25" fill="none" stroke="#00ffff" stroke-width="3" opacity="0.7" filter="drop-shadow(0 0 8px #00ffff)"/>
+                    <g transform="translate(0, -12)">
+                        <rect x="85" y="55" width="70" height="70" rx="18" fill="url(#diceCore)" stroke="#fff" stroke-width="2.5" filter="drop-shadow(0 10px 20px rgba(0,0,0,0.4))"/>
+                        <circle cx="102" cy="72" r="7" fill="#fff" filter="drop-shadow(0 0 6px #00ffff)"/>
+                        <circle cx="138" cy="72" r="7" fill="#fff" filter="drop-shadow(0 0 6px #00ffff)"/>
+                        <circle cx="102" cy="108" r="7" fill="#fff" filter="drop-shadow(0 0 6px #00ffff)"/>
+                        <circle cx="138" cy="108" r="7" fill="#fff" filter="drop-shadow(0 0 6px #00ffff)"/>
+                        <circle cx="120" cy="90" r="10" fill="#e74c3c" stroke="#fff" stroke-width="1.5"/>
+                    </g>
+                    <circle cx="75" cy="55" r="3" fill="#00ffff"/><circle cx="165" cy="45" r="2" fill="#fff"/><circle cx="145" cy="120" r="3" fill="#e74c3c"/>
+                </svg>`,
+                // 3. BOTTOM-RIGHT DIORAMA: Miniature finish line platform with golden six burst
+                `<svg viewBox="0 0 240 240">
+                    <defs>
+                        <linearGradient id="goldBase" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f1c40f"/><stop offset="100%" stop-color="#f39c12"/></linearGradient>
+                        <linearGradient id="floorPlank" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e67e22"/><stop offset="100%" stop-color="#d35400"/></linearGradient>
+                    </defs>
+                    <polygon points="120,40 210,85 120,130 30,85" fill="url(#floorPlank)"/>
+                    <polygon points="30,85 120,130 120,145 30,100" fill="#b34700"/>
+                    <polygon points="120,130 210,85 210,100 120,145" fill="#993d00"/>
+                    <polygon points="90,100 120,85 150,100 120,115" fill="#fff"/>
+                    <polygon points="70,90 90,100 120,115 100,105" fill="#222"/>
+                    <rect x="50" y="35" width="8" height="55" fill="#7f8c8d" rx="2"/>
+                    <rect x="182" y="35" width="8" height="55" fill="#7f8c8d" rx="2"/>
+                    <path d="M54 40 Q120 15 186 40" fill="none" stroke="#e74c3c" stroke-width="8"/>
+                    <g filter="drop-shadow(0 0 15px #f1c40f)">
+                        <circle cx="120" cy="75" r="26" fill="url(#goldBase)" stroke="#fff" stroke-width="2"/>
+                        <text x="120" y="85" font-family="'Anton', sans-serif" font-size="32" fill="#fff" text-anchor="middle">6</text>
+                    </g>
+                    <path d="M80 50 L86 56" stroke="#00ffff" stroke-width="3"/><path d="M155 45 L162 48" stroke="#2ecc71" stroke-width="4"/>
+                </svg>`
+            ],
+            catan: [
+                // 1. LEFT DIORAMA: Cozy hexagonal tile with animated wheat fields & windmill
+                `<svg viewBox="0 0 240 240">
+                    <polygon points="120,35 195,75 195,145 120,185 45,145 45,75" fill="#f39c12" stroke="#fff" stroke-width="1.5" filter="drop-shadow(0 20px 25px rgba(0,0,0,0.5))"/>
+                    <rect x="108" y="75" width="24" height="50" fill="#d35400" rx="3"/>
+                    <polygon points="100,75 120,55 140,75" fill="#c0392b"/>
+                    <circle cx="120" cy="85" r="5" fill="#2c3e50"/>
+                    <line x1="90" y1="85" x2="150" y2="85" stroke="#fff" stroke-width="2.5"/>
+                    <line x1="120" y1="55" x2="120" y2="115" stroke="#fff" stroke-width="2.5"/>
+                    <circle cx="75" cy="120" r="14" fill="#f1c40f"/><circle cx="160" cy="120" r="16" fill="#f1c40f"/>
+                </svg>`,
+                // 2. TOP-RIGHT DIORAMA: Mountainous ore crystal node element
+                `<svg viewBox="0 0 240 240">
+                    <polygon points="120,35 195,75 195,145 120,185 45,145 45,75" fill="#7f8c8d"/>
+                    <polygon points="120,50 170,140 70,140" fill="#95a5a6"/>
+                    <polygon points="95,65 145,150 45,150" fill="#bdc3c7"/>
+                    <polygon points="120,70 140,110 120,135 100,110" fill="#9b59b6" stroke="#fff" stroke-width="1" filter="drop-shadow(0 0 10px #9b59b6)"/>
+                    <polygon points="145,90 158,115 145,130 132,115" fill="#00ffff" stroke="#fff" stroke-width="1" filter="drop-shadow(0 0 8px #00ffff)"/>
+                </svg>`,
+                // 3. BOTTOM-RIGHT DIORAMA: Seafaring trade ship arriving at harbor beacon
+                `<svg viewBox="0 0 240 240">
+                    <polygon points="120,35 195,75 195,145 120,185 45,145 45,75" fill="#2980b9"/>
+                    <rect x="150" y="70" width="16" height="60" fill="#eceff1"/>
+                    <polygon points="146,70 158,52 170,70" fill="#c0392b"/>
+                    <circle cx="158" cy="64" r="8" fill="#fff5cc" filter="blur(4px)"/>
+                    <path d="M65,120 L105,120 L115,105 L55,105 Z" fill="#8d6e63"/>
+                    <polygon points="85,105 85,75 105,90" fill="#fff"/>
+                </svg>`
+            ],
+            sandbox: [
+                // 1. LEFT DIORAMA: Voxel floating island tile with stylized tree
+                `<svg viewBox="0 0 240 240">
+                    <rect x="45" y="75" width="150" height="75" fill="#27ae60" rx="8" filter="drop-shadow(0 20px 25px rgba(0,0,0,0.5))"/>
+                    <rect x="45" y="110" width="150" height="40" fill="#7d5c42" rx="4"/>
+                    <rect x="95" y="45" width="50" height="50" fill="#2ecc71" rx="6"/>
+                    <rect x="110" y="30" width="20" height="20" fill="#55efc4" rx="3"/>
+                    <rect x="117" y="90" width="8" height="25" fill="#634832"/>
+                </svg>`,
+                // 2. TOP-RIGHT DIORAMA: Glowing matrix mineral pickaxe excavation node
+                `<svg viewBox="0 0 240 240">
+                    <rect x="50" y="50" width="140" height="140" rx="20" fill="#2d3436" stroke="#636e72" stroke-width="4"/>
+                    <rect x="80" y="80" width="30" height="30" fill="#00ffcc" filter="drop-shadow(0 0 12px #00ffcc)"/>
+                    <rect x="130" y="70" width="20" height="20" fill="#ff007f" filter="drop-shadow(0 0 10px #ff007f)"/>
+                    <path d="M70,140 L140,70" stroke="#81ecec" stroke-width="8" stroke-linecap="square"/>
+                    <rect x="125" y="50" width="35" height="30" fill="#ffeaa7" rx="3"/>
+                </svg>`,
+                // 3. BOTTOM-RIGHT DIORAMA: Obsidian runic portal portal block
+                `<svg viewBox="0 0 240 240">
+                    <rect x="55" y="45" width="130" height="150" rx="12" fill="#1e272e" stroke="#00d2d3" stroke-width="6" filter="drop-shadow(0 0 20px #00d2d3)"/>
+                    <circle cx="120" cy="120" r="45" fill="radial-gradient(circle, #a55eea, #4b1285)"/>
+                    <circle cx="120" cy="120" r="25" fill="#fff" filter="blur(6px)" opacity="0.6"/>
+                </svg>`
+            ],
+            guide: [
+                // 1. LEFT DIORAMA: Luxury marketplace structure storefront layout
+                `<svg viewBox="0 0 240 240">
+                    <polygon points="120,40 210,85 120,130 30,85" fill="#2c3e50" filter="drop-shadow(0 20px 25px rgba(0,0,0,0.6))"/>
+                    <rect x="60" y="55" width="120" height="40" fill="#e74c3c" rx="4"/>
+                    <line x1="60" y1="75" x2="180" y2="75" stroke="#fff" stroke-width="4" stroke-dasharray="10 6"/>
+                    <ellipse cx="120" cy="115" rx="30" ry="10" fill="#ffd700" stroke="#fff" stroke-width="1.5"/>
+                    <path d="M110,85 L130,85 L125,115 L115,115 Z" fill="linear-gradient(#fff, #aaa)"/>
+                </svg>`,
+                // 2. TOP-RIGHT DIORAMA: Golden reward safe box treasure chest safe vault
+                `<svg viewBox="0 0 240 240">
+                    <rect x="50" y="50" width="140" height="130" rx="22" fill="linear-gradient(135deg, #f1c40f, #d35400)" stroke="#fff" stroke-width="3" filter="drop-shadow(0 20px 30px rgba(0,0,0,0.7))"/>
+                    <rect x="68" y="68" width="104" height="94" fill="#1c1c1f" rx="10"/>
+                    <circle cx="120" cy="115" r="24" fill="none" stroke="#f1c40f" stroke-width="6"/>
+                    <circle cx="120" cy="115" r="8" fill="#00ff66" filter="drop-shadow(0 0 8px #00ff66)"/>
+                    <circle cx="80" cy="85" r="4" fill="#ffd700"/><circle cx="160" cy="140" r="3" fill="#ffd700"/>
+                </svg>`,
+                // 3. BOTTOM-RIGHT DIORAMA: Floating VIP validation card display capsule
+                `<svg viewBox="0 0 240 240">
+                    <ellipse cx="120" cy="160" rx="60" ry="18" fill="#34495e"/>
+                    <path d="M60,80 L60,160 Q120,190 180,160 L180,80 Z" fill="rgba(0, 240, 255, 0.08)" stroke="#00ffff" stroke-width="2"/>
+                    <ellipse cx="120" cy="80" rx="60" ry="16" fill="rgba(255,255,255,0.2)" stroke="#00ffff" stroke-width="1.5"/>
+                    <g transform="translate(0, -10)">
+                        <rect x="85" y="95" width="70" height="44" rx="6" fill="rgba(231, 76, 60, 0.8)" stroke="#fff" stroke-width="1.5" transform="rotate(-15 120 117)"/>
+                        <text x="120" y="122" font-family="'Anton', sans-serif" font-size="14" fill="#fff" text-anchor="middle" transform="rotate(-15 120 117)">VIP PASS</text>
+                    </g>
+                </svg>`
+            ]
+        };
+
+        const DATA = [
+            { name: "LUDO RUNNERS", game: "ludo", title: "LUDO", type: "TOY WORLD ECOSYSTEM", desc: "A high-octane traversal sandbox arena. Guide living wood pawns through localized grid loops, drop color-bomb obstacles along traffic coordinates, and detonate golden six explosions to win.", src: 'https://fifth-gentle-45902158.figma.site/_components/v2/4de492f6d9cf8244ad5293233e5c6f52407d42fc/2.b977faab.png', bg: '#0D4F2C', ring1: '#00ff66', ring2: '#ffaa00', vendor: 'PALI HILL ENERGY', deal: 'FREE LUDO PASS MATCH REFILL', stickKey: 'ludo' },
+            { name: "BANDRA SETTLERS", game: "catan", title: "CATAN", type: "BOARD STRATEGY MATRIX", desc: "Monopolize neighborhood trade routes. Barter golden wheat layers, capture premium territory plots, and deploy physical wood guardian blocks to cut off your opponents.", src: 'https://fifth-gentle-45902158.figma.site/_components/v2/4de492f6d9cf8244ad5293233e5c6f52407d42fc/1.02464a56.png', bg: '#8A251A', ring1: '#FF0055', ring2: '#00F0FF', vendor: 'SUBWAY CARTER', deal: 'BOGO CHAI SHAKE // CODE: HUSTLE', stickKey: 'catan' },
+            { name: "MAYANAGRI CRAFT", game: "sandbox", title: "CRAFT", type: "VOXEL FANTASY CANVAS", desc: "Forge an original block world from the ground up. Mine glowing crystal shards with specialized pickaxes, summon block elemental spirits, and structure immense property grids.", src: 'https://fifth-gentle-45902158.figma.site/_components/v2/4de492f6d9cf8244ad5293233e5c6f52407d42fc/3.4df853b4.png', bg: '#581B82', ring1: '#FFFF00', ring2: '#FF00FF', vendor: 'KICKSTART CAFE', deal: 'FLAT 30% OFF NITRO COLD BREWS', stickKey: 'sandbox' },
+            { name: "BANDRA BUZZ", game: "guide", title: "BUZZ", type: "CYBER HUB TERMINAL", desc: "The ultimate premium directory platform. Crack open golden loot vaults, secure high-value holographic coupons, and claim limited rewards from the neighborhood's elite merchants.", src: 'https://fifth-gentle-45902158.figma.site/_components/v2/4de492f6d9cf8244ad5293233e5c6f52407d42fc/4.4457fbce.png', bg: '#134770', ring1: '#00FFFF', ring2: '#FFFFFF', vendor: 'ELITE MERCHANDISE', deal: 'SECRET MYSTERY VAULT IS LIVE', stickKey: 'guide' }
+        ];
+
+        let activeIndex = 0, isAnimating = false;
+        const root = document.getElementById('app-root'), stage = document.getElementById('stage'), stickerLayer = document.getElementById('sticker-layer');
+
+        function init() {
+            stage.innerHTML = '';
+            DATA.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'character-wrapper'; div.id = `char-${idx}`;
+                div.innerHTML = `<img src="${item.src}" alt="Hero ${item.name}" draggable="false">`;
+                stage.appendChild(div);
+            });
+            updateScene();
+        }
+
+        function updateScene() {
+            const current = DATA[activeIndex];
+            root.style.setProperty('--bg-current', current.bg);
+            root.style.setProperty('--ring-1', current.ring1);
+            root.style.setProperty('--ring-2', current.ring2);
+            document.getElementById('ghost-title').innerText = current.title;
+            document.getElementById('char-name').innerText = current.name;
+            document.getElementById('char-desc').innerText = current.desc;
+            document.getElementById('meta-type').innerText = current.type;
+            document.getElementById('deal-vendor').innerText = current.vendor;
+            document.getElementById('deal-text').innerText = current.deal;
+
+            DATA.forEach((_, idx) => {
+                const node = document.getElementById(`char-${idx}`);
+                node.className = 'character-wrapper';
+                if (idx === activeIndex) node.classList.add('role-center');
+                else if (idx === (activeIndex + DATA.length - 1) % DATA.length) node.classList.add('role-left');
+                else if (idx === (activeIndex + 1) % DATA.length) node.classList.add('role-right');
+                else node.classList.add('role-back');
+            });
+
+            renderAAADioramaPods(current.stickKey);
+        }
+
+        function renderAAADioramaPods(key) {
+            stickerLayer.innerHTML = '';
+            const models = DIORAMAS[key];
+            
+            // Explicit Curated Layout Configurations: Left, Top-Right, Bottom-Right
+            const layouts = [
+                { left: 10, top: 22, profile: 'd-orbit-left', depth: -180 },
+                { left: 74, top: 14, profile: 'd-orbit-topright', depth: -120 },
+                { left: 76, top: 48, profile: 'd-orbit-bottomright', depth: -60 }
+            ];
+
+            models.forEach((svgMarkup, i) => {
+                if(i >= layouts.length) return;
+                const config = layouts[i];
+                
+                const frame = document.createElement('div');
+                frame.className = 'aaa-diorama-card';
+                frame.innerHTML = svgMarkup;
+
+                frame.style.left = `${config.left}%`;
+                frame.style.top = `${config.top}%`;
+                frame.style.transform = `translateZ(${config.depth - 200}px) scale(0.6)`;
+                frame.style.opacity = '0';
+                frame.style.animation = `${config.profile} ${5 + (i * 1.5)}s infinite alternate ease-in-out`;
+
+                stickerLayer.appendChild(frame);
+
+                // Entrance parallax sweep execution
+                setTimeout(() => {
+                    frame.style.transform = `translateZ(${config.depth}px) scale(1.15)`;
+                    frame.style.opacity = '1';
+                }, 60 + (i * 80));
+            });
+        }
+
+        function navigate(dir) {
+            if (isAnimating) return;
+            isAnimating = true;
+            activeIndex = dir === 'next' ? (activeIndex + 1) % DATA.length : (activeIndex + DATA.length - 1) % DATA.length;
+            updateScene();
+            setTimeout(() => { isAnimating = false; }, 900);
+        }
+
+        function launchGame(e) {
+            e.preventDefault();
+            alert(`Booting Modular Game Environment Engine: [${DATA[activeIndex].game.toUpperCase()}]`);
+        }
+
+        let audioCtx = null;
+        function toggleMusic() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                setInterval(() => {
+                    if(audioCtx && audioCtx.state === 'running') {
+                        let osc = audioCtx.createOscillator(); let gain = audioCtx.createGain();
+                        osc.type = 'sine'; const tracks = [146.83, 164.81, 220.00, 293.66];
+                        osc.frequency.setValueAtTime(tracks[Math.floor(Math.random() * tracks.length)], audioCtx.currentTime);
+                        gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+                        osc.connect(gain); gain.connect(audioCtx.destination);
+                        osc.start(); osc.stop(audioCtx.currentTime + 0.5);
+                    }
+                }, 280);
+                document.getElementById('m-status').innerText = "🔊 AUDIO SYNTH: OPERATIONAL"; return;
+            }
+            if (audioCtx.state === 'suspended') { audioCtx.resume(); document.getElementById('m-status').innerText = "🔊 AUDIO SYNTH: OPERATIONAL"; }
+            else { audioCtx.suspend(); document.getElementById('m-status').innerText = "🔇 AUDIO SYNTH: ASLEEP"; }
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
