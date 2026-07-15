@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BANDRA HUSTLERS // AAA INTERACTIVE SYSTEM ARCHITECTURE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+    
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- React Mount Root (Remains entirely quiet to avoid overriding DOM layout) -->
+    <div id="root"></div>
+
+    <!-- ============================================================
+         1. CINEMATIC INTRO HUD
+         ============================================================ -->
+    <div id="intro">
+        <div id="camera" class="camera-breath">
+            <!-- Sky vectors -->
+            <div class="sky-gradient"></div>
+            <div class="stars-bg"></div>
+            <div class="sun-disc">
+                <!-- Custom dripping golden sun SVG from attached image -->
+                <svg viewBox="0 0 400 400" width="100%" height="100%" style="overflow: visible;">
+                    <defs>
+                        <radialGradient id="goldMeltingGradient" cx="50%" cy="40%" r="50%">
+                            <stop offset="0%" stop-color="#fffcef" />
+                            <stop offset="35%" stop-color="#ffe600" />
+                            <stop offset="70%" stop-color="#ff5e00" />
+                            <stop offset="100%" stop-color="#ff0055" />
+                        </radialGradient>
+                        <filter id="neonSunGlow">
+                            <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <path d="M 60 180 A 140 140 0 1 1 340 180 C 340 220, 320 210, 315 225 C 310 245, 305 330, 295 330 C 285 330, 280 230, 275 235 C 265 245, 270 385, 255 385 C 240 385, 245 240, 235 240 C 225 240, 220 295, 210 295 C 200 295, 195 210, 185 210 C 175 210, 170 355, 155 355 C 140 355, 145 220, 135 225 C 125 230, 120 275, 110 275 C 100 275, 95 190, 85 195 C 75 200, 70 235, 60 180 Z" fill="url(#goldMeltingGradient)" filter="url(#neonSunGlow)" />
+                </svg>
+            </div>
+            <div class="cloud-layer cloud-back"></div>
+            <div class="cloud-layer cloud-front"></div>
+
+            <!-- Post Production VFX -->
+            <div class="film-grain"></div>
+            <div class="scanlines"></div>
+            <div class="vignette"></div>
+            <div class="lens-flare"></div>
+
+            <!-- Skyline Silhouette -->
+            <div class="city-depth"></div>
+            <svg class="bandra-skyline" viewBox="0 0 1600 420" preserveAspectRatio="none">
+                <!-- Skyline silhouette curves -->
+                <path d="M0 420 L0 320 L40 305 L50 200 L90 200 L100 320 L150 320 L160 120 L220 120 L230 320 L280 295 L300 100 L360 100 L380 295 L430 320 L440 150 L480 150 L490 320 L550 275 L570 70 L630 70 L650 275 L710 320 L720 160 L760 160 L770 320 L820 305 L840 115 L890 115 L910 305 L970 320 L980 140 L1020 140 L1030 320 L1090 285 L1100 90 L1150 90 L1170 285 L1220 320 L1230 170 L1270 170 L1280 320 L1340 265 L1360 60 L1420 60 L1440 265 L1490 320 L1520 180 L1570 180 L1590 320 L1600 320 L1600 420 Z"/>
+            </svg>
+
+            <!-- Blurred Silhouette of Bandra Fort Tower -->
+            <svg class="bandra-fort-silhouette" viewBox="0 0 100 120" preserveAspectRatio="none">
+                <path d="M10 120 L10 40 L25 40 L25 10 L35 10 L35 40 L50 40 L50 10 L60 10 L60 40 L75 40 L75 10 L85 10 L85 40 L90 40 L90 120 Z"/>
+            </svg>
+
+            <!-- Mount Mary Church Silhouette -->
+            <svg id="churchSilhouette" class="church-silhouette" viewBox="0 0 120 160" preserveAspectRatio="none">
+                <path d="M10 160 L10 70 L30 70 L30 30 L50 30 L50 10 L70 10 L70 30 L90 30 L90 70 L110 70 L110 160 Z" fill="#030106"/>
+                <!-- Spire cross -->
+                <line x1="60" y1="5" x2="60" y2="22" stroke="var(--yellow)" stroke-width="2.5"/>
+                <line x1="53" y1="11" x2="67" y2="11" stroke="var(--yellow)" stroke-width="2.5"/>
+            </svg>
+
+            <!-- Dynamic Sea & Wave Glow -->
+            <div class="sea-layer">
+                <div class="sea-reflection"></div>
+                <div class="sea-wave wave1"></div>
+                <div class="sea-wave wave2"></div>
+                <div class="sea-wave wave3"></div>
+            </div>
+
+            <!-- Traditional Koli Fisherman Boat on the sea -->
+            <svg id="fishermanBoat" class="fisherman-boat" viewBox="0 0 100 60">
+                <path d="M10 40 L90 40 L80 55 L20 55 Z" fill="#05030a" stroke="var(--cyan)" stroke-width="1.8"/>
+                <path d="M50 40 L50 10 L72 25 Z" fill="none" stroke="#fff" stroke-width="2"/>
+                <!-- Fisherman sitting -->
+                <circle cx="43" cy="38" r="4" fill="#05030a"/>
+                <path d="M41 42 L46 42 L44 50 Z" fill="#05030a"/>
+            </svg>
+
+            <!-- Bandra-Worli Sea Link Wireframe SVG -->
+            <svg id="seaLink" class="sea-link" viewBox="0 0 1600 420" preserveAspectRatio="none">
+                <!-- Pillars -->
+                <path d="M380 280 L440 40 L500 280 Z" fill="#04020a" stroke="var(--cyan)" stroke-width="2"/>
+                <path d="M1100 280 L1160 40 L1220 280 Z" fill="#04020a" stroke="var(--cyan)" stroke-width="2"/>
+                <!-- Suspended Deck -->
+                <path d="M0 270 Q800 235 1600 270" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="6 4"/>
+                <!-- Cables left tower -->
+                <path d="M440 40 L180 270 M440 40 L230 270 M440 40 L280 270 M440 40 L330 270 M440 40 L380 270 M440 40 L500 270 M440 40 L550 270 M440 40 L600 270 M440 40 L650 270" stroke="rgba(0, 229, 255, 0.4)" stroke-width="1.2"/>
+                <!-- Cables right tower -->
+                <path d="M1160 40 L900 270 M1160 40 L950 270 M1160 40 L1000 270 M1160 40 L1050 270 M1160 40 L1100 270 M1160 40 L1220 270 M1160 40 L1270 270 M1160 40 L1320 270 M1160 40 L1370 270" stroke="rgba(0, 229, 255, 0.4)" stroke-width="1.2"/>
+                <!-- Red warning lamps -->
+                <circle cx="440" cy="40" r="4.5" fill="var(--red)"/>
+                <circle cx="1160" cy="40" r="4.5" fill="var(--red)"/>
+            </svg>
+
+            <!-- Palms -->
+            <div class="palms">
+                <div class="palm palm-left"></div>
+                <div class="palm palm-right"></div>
+            </div>
+
+            <!-- Street Lights -->
+            <div class="street-lights"></div>
+
+            <!-- Cyber Traffic lanes -->
+            <div class="traffic-lane" id="taxiLane"></div>
+            <div class="traffic-lane" id="rickshawLane" style="bottom: 5vh;"></div>
+
+            <!-- Streaking local train (Left-to-Right) -->
+            <div id="train" class="train-wrapper">
+                <div class="train">
+                    <div class="train-text">MUMBAI LOCAL</div>
+                    <div class="train-windows"></div>
+                </div>
+            </div>
+
+            <!-- Second local train (Right-to-Left) -->
+            <div id="train2" class="train-wrapper train-wrapper-2">
+                <div class="train train-reverse">
+                    <div class="train-text">CENTRAL LINE</div>
+                    <div class="train-windows"></div>
+                </div>
+            </div>
+
+            <!-- Flying flock of birds -->
+            <div class="birds" id="birdsContainer">
+                <span style="top: 14%; animation-delay: 2s;"></span>
+                <span style="top: 20%; animation-delay: 2.3s;"></span>
+                <span style="top: 17%; animation-delay: 2.7s;"></span>
+            </div>
+
+            <!-- Comic book BOOM sticker panels -->
+            <div id="comicPow" class="comic" style="top: 32%; right: 22%;">POW!</div>
+            <div id="comicBoom" class="comic" style="top: 18%; left: 10%;">BOOM!</div>
+            <div id="comicBam" class="comic" style="bottom: 24%; right: 8%;">BAM!</div>
+            <div id="comicLetsGo" class="comic" style="top: 25%; left: 45%;">LET'S GO!</div>
+            <div id="comicWow" class="comic" style="bottom: 15%; left: 15%;">WOW!</div>
+
+            <!-- Area nameplates and iconic places of Bandra -->
+            <div id="stationBoard" class="station-board">BANDRA STATION</div>
+            <div class="location-sign" id="sign1" style="left: 12%; bottom: 22vh;">CARTER ROAD</div>
+            <div class="location-sign" id="sign2" style="left: 28%; bottom: 24vh;">PALI HILL</div>
+            <div class="location-sign" id="sign3" style="right: 30%; bottom: 23vh;">HILL ROAD</div>
+            <div class="location-sign" id="sign4" style="right: 15%; bottom: 21vh;">LINKING ROAD</div>
+            <div class="location-sign" id="sign5" style="left: 45%; bottom: 23vh;">BANDSTAND</div>
+            <div class="location-sign" id="sign6" style="right: 48%; bottom: 25vh;">CHAPEL ROAD</div>
+
+            <!-- Floating Street culture stickers -->
+            <div class="sticker-world" id="stickerWorld">
+                <div class="sticker" style="top: 10%; left: 16%;">🎮</div>
+                <div class="sticker" style="top: 20%; right: 15%;">🎨</div>
+                <div class="sticker" style="bottom: 35%; left: 20%;">🛹</div>
+                <div class="sticker" style="bottom: 25%; right: 20%;">⚡</div>
+                <div class="sticker" style="top: 6%; left: 50%;">🔥</div>
+                <div class="sticker" style="bottom: 15%; left: 42%;">👟</div>
+                <div class="sticker" style="top: 28%; left: 6%;">💿</div>
+            </div>
+
+            <!-- Massive Chromed Title Reveal -->
+            <section id="hero" class="hero">
+                <div class="small-title">WELCOME TO THE STREETS OF</div>
+                <h1 id="logo">
+                    BANDRA
+                    <span>HUSTLERS</span>
+                </h1>
+                <div class="hero-subtitle">MUMBAI • GAMES • WEBTOONS • DEALS • CULTURE</div>
+            </section>
+
+            <!-- Active context words pills -->
+            <section class="action-sequence" id="actionSequence">
+                <span>PLAY</span>
+                <span>READ</span>
+                <span>BUILD</span>
+                <span>CREATE</span>
+                <span>EXPLORE</span>
+                <span>DISCOVER</span>
+            </section>
+
+
+            <!-- Particle Canvas explosion overlays -->
+            <canvas id="particleCanvas"></canvas>
+
+            <!-- Screen flash layer -->
+            <div class="white-flash" id="whiteFlash"></div>
+
+            <!-- Marathi Logo Pop art Sticker -->
+            <div id="marathiLogo" class="marathi-logo">आमची वांद्रे</div>
+
+            <!-- Bollywood Star Sticker -->
+            <div id="bollywoodSticker" class="bollywood-sticker">
+                <div class="shades-icon">🕶️⭐</div>
+                <div class="star-label">BOLLYWOOD STAR</div>
+            </div>
+        </div>
+
+        <!-- Audio dynamic helper prompter -->
+        <div id="audioPrompt" class="audio-prompt">🔊 TAP ANYWHERE FOR SOUND</div>
+
+        <!-- Glassmorphic Enter Site button -->
+        <button class="intro-skip" id="skipButton">
+            <span>ENTER SITE</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; display: inline-block; margin-left: 6px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+    </div>
+
+    <!-- POP ART STYLE TRANSITION CURTAIN -->
+    <div id="popArtTransition" class="pop-art-transition">
+        <div class="stripe stripe-pink"></div>
+        <div class="stripe stripe-yellow"></div>
+        <div class="stripe stripe-cyan"></div>
+        <div class="pop-art-text" id="popArtText">आमची वांद्रे</div>
+    </div>
+
+
+    <!-- ============================================================
+         2. MAIN INTERACTIVE REVEALED HOMEPAGE
+         ============================================================ -->
+    <div class="app-container" id="app-root">
+        <!-- ATMOSPHERIC VIBE OVERLAYS -->
+        <div id="vibeOverlay" class="vibe-overlay-layer"></div>
+
+        <!-- FLOAT ATMOSPHERIC VIBE SELECTOR -->
+        <div class="vibe-control-widget" id="vibeWidget">
+            <button class="vibe-widget-btn" onclick="toggleVibeMenu(event)">
+                <span class="vibe-icon">🔮</span>
+                <span class="vibe-label">AMBIENT VIBE: <span id="activeVibeName">SUNSET HAZE</span></span>
+                <span class="vibe-chevron">▼</span>
+            </button>
+            <div class="vibe-dropdown-menu" id="vibeDropdown">
+                <div class="vibe-menu-header">SELECT COGNITIVE ATMOSPHERE</div>
+                <button class="vibe-option active" onclick="selectAmbientVibe('sunset', 'SUNSET HAZE', '🔮', event)">
+                    <span class="opt-icon">🌅</span>
+                    <div class="opt-info">
+                        <span class="opt-title">SUNSET HAZE</span>
+                        <span class="opt-desc">Warm orange & golden pink twilight glow</span>
+                    </div>
+                </button>
+                <button class="vibe-option" onclick="selectAmbientVibe('cyber', 'CYBER NEON', '⚡', event)">
+                    <span class="opt-icon">🌌</span>
+                    <div class="opt-info">
+                        <span class="opt-title">CYBER NEON</span>
+                        <span class="opt-desc">Deep violet pulse & cyan cyber grid scan</span>
+                    </div>
+                </button>
+                <button class="vibe-option" onclick="selectAmbientVibe('mist', 'PALI HILL MIST', '🌿', event)">
+                    <span class="opt-icon">🌿</span>
+                    <div class="opt-info">
+                        <span class="opt-title">PALI HILL MIST</span>
+                        <span class="opt-desc">Organic emerald fog & peaceful shadow dust</span>
+                    </div>
+                </button>
+                <button class="vibe-option" onclick="selectAmbientVibe('breeze', 'CARTER ROAD BREEZE', '🌊', event)">
+                    <span class="opt-icon">🌊</span>
+                    <div class="opt-info">
+                        <span class="opt-title">CARTER ROAD BREEZE</span>
+                        <span class="opt-desc">Cool oceanside teal ripples & sea salt wind</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div class="ambient-shading"></div>
+        <div class="grain-overlay"></div>
+        
+        <!-- Cyber Neon HUD header & Chai Tap Engine -->
+        <div class="hustler-hud-header">
+            <div class="hud-profile-badge">
+                <span class="hud-glitch-text">HUSTLER LEVEL 4</span>
+                <span class="hud-badge-tag">STREET REGULAR</span>
+            </div>
+            
+            <div class="chai-container">
+                <span class="chai-badge">💰 <span id="chaiPointsVal">100</span> CHAI PTS</span>
+                <div class="chai-cup" onclick="tapChaiCup()" title="Tap to Brew Chai Points!">+☕</div>
+            </div>
+        </div>
+        
+        <!-- Navbar controls -->
+        <div class="system-footer">
+            <button class="replay-btn" id="replayIntroBtn">⚡ REPLAY CINEMATIC INTRO</button>
+        </div>
+
+        <button class="audio-toggle" onclick="toggleMusic()"><span id="m-status">⚡ INITIALIZE SYSTEM AUDIO</span></button>
+        
+        <div class="ghost-text" id="ghost-title">LUDO</div>
+        
+        <!-- Rotating concentric circle neon rings -->
+        <div class="ring-system">
+            <div class="neon-ring-outer"></div>
+            <div class="neon-ring-inner"></div>
+        </div>
+
+        <!-- Slideshow diorama navigational buttons -->
+        <button class="ring-nav-btn ring-nav-left" onclick="navigate('prev')" aria-label="Previous Frame">
+            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="ring-nav-btn ring-nav-right" onclick="navigate('next')" aria-label="Next Frame">
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <!-- Slideshow stage & interactive dioramas -->
+        <div class="stage-container" id="stage"></div>
+        <div class="props-container" id="sticker-layer"></div>
+
+
+        <!-- Sleek bottom control HUD -->
+        <div class="bottom-console">
+            <div>
+                <div class="brand-meta" id="meta-type">TOY WORLD CHAOS</div>
+                <p class="ui-title" id="char-name">LUDO RUNNERS</p>
+            </div>
+
+            <div>
+                <p class="ui-desc" id="char-desc">Loading visual world engine ecosystems...</p>
+            </div>
+
+            <div class="console-right-panel">
+                <div class="compact-deal-box">
+                    <div>
+                        <div style="font-size: 0.55rem; opacity: 0.5; font-weight: 900; text-transform: uppercase;">REALTIME MARKET DROP</div>
+                        <div class="deal-vendor" id="deal-vendor">LOADING NODE</div>
+                    </div>
+                    <div class="deal-text" id="deal-text">UPDATING VIP BADGE METADATA...</div>
+                </div>
+                <a href="#" class="launcher-btn" onclick="launchGame(event)">ENTER</a>
+            </div>
+        </div>
+
+        <!-- Persistent "Buy Me a Coffee" Button Overlay -->
+        <button class="coffee-support-btn" onclick="openCoffeeModal()" title="Support Bandra Hustlers Development!">
+            <span class="coffee-emoji">☕</span> SUPPORT HUSTLERS
+        </button>
+    </div>
+
+    <!-- Dedicated Buy Me a Coffee modal overlay -->
+    <div id="coffeeSupportModal" class="system-modal" style="display: none; z-index: 10010;">
+        <div class="modal-glow-bg" style="background: radial-gradient(circle, rgba(255,122,0,0.15) 0%, rgba(0,0,0,0.95) 100%);"></div>
+        <div class="modal-container coffee-modal-container" style="border-color: var(--orange); box-shadow: 0 0 35px rgba(255, 122, 0, 0.3);">
+            <div class="modal-header" style="padding: 16px 24px; border-bottom: 1px solid rgba(255,122,0,0.15);">
+                <div class="modal-header-meta">
+                    <span style="color: var(--orange); font-weight: 900;">🧡 STREET CREATORS FUND</span>
+                    <span class="modal-live-indicator" style="color: var(--orange); border-color: var(--orange);">● LIVE QR PAY</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeCoffeeModal()">
+                    <span class="close-label" style="color: var(--orange);">BACK TO HUB</span>
+                    <span class="close-icon" style="color: var(--orange);">×</span>
+                </button>
+            </div>
+            <div class="coffee-modal-body">
+                <div class="coffee-popup-card">
+                    <div class="coffee-icon-bounce">☕</div>
+                    <h2>BUY THE DEVS A CHAI!</h2>
+                    <p class="coffee-thanks">
+                        We are passionate about crafting retro games, local comics, and interactive learning toolkits for the community! Fuel our late-night coding sessions with a warm cup of Bandra cutting chai.
+                    </p>
+                    
+                    <!-- Realtime Interactive QR payment simulated screen -->
+                    <div class="coffee-qr-section">
+                        <div class="glowing-qr-frame">
+                            <svg class="qr-vector" viewBox="0 0 100 100" fill="none" stroke="#ff7a00" stroke-width="4" stroke-linecap="round">
+                                <rect x="5" y="5" width="25" height="25" stroke="#ff7a00" stroke-width="6" fill="none"/>
+                                <rect x="12" y="12" width="11" height="11" fill="#ff7a00"/>
+                                <rect x="70" y="5" width="25" height="25" stroke="#ff7a00" stroke-width="6" fill="none"/>
+                                <rect x="77" y="12" width="11" height="11" fill="#ff7a00"/>
+                                <rect x="5" y="70" width="25" height="25" stroke="#ff7a00" stroke-width="6" fill="none"/>
+                                <rect x="12" y="77" width="11" height="11" fill="#ff7a00"/>
+                                <line x1="45" y1="10" x2="55" y2="10" stroke="#00e5ff" stroke-width="5"/>
+                                <line x1="45" y1="20" x2="45" y2="35" stroke="#ff008c" stroke-width="5"/>
+                                <line x1="55" y1="30" x2="65" y2="30" stroke="#1d0f30" stroke-width="4"/>
+                                <line x1="15" y1="45" x2="35" y2="45" stroke="#ff7a00" stroke-width="5"/>
+                                <line x1="25" y1="55" x2="25" y2="65" stroke="#1d0f30" stroke-width="4"/>
+                                <line x1="45" y1="50" x2="60" y2="50" stroke="#ff7a00" stroke-width="5"/>
+                                <line x1="50" y1="60" x2="50" y2="85" stroke="#00e5ff" stroke-width="5"/>
+                                <line x1="60" y1="75" x2="85" y2="75" stroke="#ff008c" stroke-width="5"/>
+                                <line x1="75" y1="45" x2="75" y2="65" stroke="#1d0f30" stroke-width="4"/>
+                                <line x1="85" y1="45" x2="85" y2="55" stroke="#00e5ff" stroke-width="4"/>
+                                <circle cx="50" cy="45" r="8" fill="#ff7a00"/>
+                                <rect x="47" y="42" width="6" height="6" fill="#fff"/>
+                            </svg>
+                        </div>
+                        <div class="qr-instructions">
+                            <span class="qr-tag">SCAN TO DONATE</span>
+                            <p class="qr-caption">
+                                Scan using Google Pay, PhonePe, Paytm, or BHIM UPI. 100% of proceeds go to Pali Hill community creators & coding camps.
+                            </p>
+                            <div class="coffee-custom-actions">
+                                <input type="text" class="upi-address-input" id="coffeeUpiAddress" value="bandrahustlers@upi" readonly>
+                                <button class="copy-upi-btn" onclick="copyUpiAddress()">COPY UPI</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive tiers -->
+                    <div class="coffee-tiers">
+                        <div class="coffee-tier-card" onclick="selectCoffeeTier(10, this)">
+                            <span class="tier-emoji">☕</span>
+                            <span class="tier-name">Cutting Chai</span>
+                            <span class="tier-price">₹10</span>
+                        </div>
+                        <div class="coffee-tier-card active" onclick="selectCoffeeTier(50, this)">
+                            <span class="tier-emoji">🥪</span>
+                            <span class="tier-name">Bun Maska Combo</span>
+                            <span class="tier-price">₹50</span>
+                        </div>
+                        <div class="coffee-tier-card" onclick="selectCoffeeTier(150, this)">
+                            <span class="tier-emoji">🧁👑</span>
+                            <span class="tier-name">Pali Hill Feast</span>
+                            <span class="tier-price">₹150</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         AAA IMMERSIVE CONSOLE MODALS
+         ============================================================ -->
+    <div id="systemModal" class="system-modal" style="display: none;">
+        <div class="modal-glow-bg"></div>
+        <div class="modal-container" id="mainModalContainer">
+            <!-- Modal Header -->
+            <div class="modal-header" style="flex-direction: column; align-items: stretch; gap: 10px; padding: 16px 24px 8px 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="modal-header-meta">
+                        <span id="modalMetaCategory">ARCADE TERMINAL</span>
+                        <span class="modal-live-indicator">● LIVE NETWORK</span>
+                    </div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <button id="modalSectionBackBtn" onclick="goBackToSectionHome()" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 6px 14px; border-radius: 6px; color: #fff; font-size: 11px; font-weight: bold; cursor: pointer; display: none; align-items: center; gap: 6px; transition: all 0.2s;">
+                            <span>◀ BACK</span>
+                        </button>
+                        <button class="modal-close-btn" onclick="closeSystemModal()">
+                            <span class="close-label">◀ BACK</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Inline Tab Navigation inside Modal Header -->
+                <div class="modal-nav-tabs" style="display: flex; gap: 8px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; overflow-x: auto; scrollbar-width: none;">
+                    <button class="modal-nav-tab" id="modal-tab-webtoons" onclick="switchModalPanel('webtoons')" style="background: none; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; color: #aaa; padding: 5px 12px; font-size: 0.72rem; font-weight: 800; cursor: pointer; transition: all 0.2s; white-space: nowrap;">📚 COMICS SHELF</button>
+                    <button class="modal-nav-tab" id="modal-tab-games" onclick="switchModalPanel('games')" style="background: none; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; color: #aaa; padding: 5px 12px; font-size: 0.72rem; font-weight: 800; cursor: pointer; transition: all 0.2s; white-space: nowrap;">🎮 RETRO ARCADE</button>
+                    <button class="modal-nav-tab" id="modal-tab-deals" onclick="switchModalPanel('deals')" style="background: none; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; color: #aaa; padding: 5px 12px; font-size: 0.72rem; font-weight: 800; cursor: pointer; transition: all 0.2s; white-space: nowrap;">💰 LOCAL DEALS</button>
+                    <button class="modal-nav-tab" id="modal-tab-learning" onclick="switchModalPanel('learning')" style="background: none; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; color: #aaa; padding: 5px 12px; font-size: 0.72rem; font-weight: 800; cursor: pointer; transition: all 0.2s; white-space: nowrap;">⚡ CODING HUB & GALLERY</button>
+                </div>
+            </div>
+
+            <!-- Modal Content Panels -->
+            <div class="modal-body">
+                <!-- 1. Webtoons Panel -->
+                <div id="panel-webtoons" class="modal-panel" style="display: none; padding: 24px;">
+                    <!-- WEBTOONS SHELF LANDING VIEW -->
+                    <div id="webtoons-shelf-view" class="webtoons-shelf-view">
+                        <div class="shelf-header">
+                            <div class="shelf-title-row">
+                                <h2 class="shelf-title">BANDRA COMIC BAZAAR</h2>
+                                <span class="shelf-badge">24 SERIES ONLINE</span>
+                            </div>
+                            <p class="shelf-desc">Explore 24 original indie webtoons, manga, and graphic novels set in the lanes, cafes, and skateparks of Bandra West.</p>
+                            
+                            <!-- Search & Genre Filter Bar -->
+                            <div class="shelf-controls">
+                                <div class="shelf-search-wrapper">
+                                    <span class="search-icon">🔍</span>
+                                    <input type="text" id="shelfSearch" placeholder="Search comics, creators, genres..." oninput="filterShelfComics()">
+                                </div>
+                                <div class="shelf-filter-bar">
+                                    <button class="filter-pill active" onclick="filterShelfGenre('all', this)">ALL STORIES</button>
+                                    <button class="filter-pill" onclick="filterShelfGenre('action', this)">🛹 ACTION</button>
+                                    <button class="filter-pill" onclick="filterShelfGenre('romance', this)">🌸 ROMANCE</button>
+                                    <button class="filter-pill" onclick="filterShelfGenre('thriller', this)">🕵️ MYSTERY & TECH</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Smooth Scrolling Grid of 24 Books -->
+                        <div class="shelf-scroll-container">
+                            <div class="shelf-books-grid" id="shelfBooksGrid">
+                                <!-- Dynamically generated book covers -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WEBTOONS READER STAGE VIEW (Hidden by default) -->
+                    <div id="webtoons-reader-view" class="webtoons-reader-view" style="display: none;">
+                        <div class="reader-header-bar">
+                            <button class="reader-back-btn" onclick="backToShelf()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                                <span>BACK TO SHELF</span>
+                            </button>
+                            <div class="reader-header-meta">
+                                <h3 id="reader-active-title">PALI HILL RIVALS</h3>
+                                <p id="reader-episode-name">Episode 1: Sourdough Showdown</p>
+                            </div>
+                        </div>
+                        
+                        <div class="webtoons-layout">
+                            <!-- Sidebar: Episode Lists -->
+                            <div class="webtoons-sidebar">
+                                <h3 class="panel-subtitle">EPISODES</h3>
+                                <div class="comic-list" id="comicEpisodeList">
+                                    <!-- Episodes listed here -->
+                                </div>
+                            </div>
+                            <!-- Reader Stage Content -->
+                            <div class="webtoons-reader" id="webtoonsReader">
+                                <!-- Comic frames will load here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Games Panel -->
+                <div id="panel-games" class="modal-panel" style="display: none; padding: 0;">
+                    <div class="arcade-netflix-container">
+                        <!-- Active Game Stage (displayed when a game is active) -->
+                        <div id="active-game-stage" style="display: none;">
+                            <div class="stage-header">
+                                <button class="back-to-selector-btn" onclick="backToGameSelector()">◀ BACK TO SELECTOR</button>
+                                <span class="active-game-title" id="active-game-title-header">SNAKE - BANDRA TRAIN CRAWLER</span>
+                            </div>
+                            <div class="active-game-body" id="active-game-body">
+                                <!-- Selected Game Content renders here dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Game Selection Panel (Netflix style!) -->
+                        <div id="game-selection-panel">
+                            <div class="netflix-arcade-header">
+                                <h2>POPULAR RETRO CHANNELS</h2>
+                                <p>Launch a 100% playable retro-cabinet simulator inside Bandra's gaming network</p>
+                            </div>
+                            <div class="netflix-grid">
+                                <!-- Card 1: Snake (Bandra Train Crawler) -->
+                                <div class="netflix-card" onclick="launchArcadeGame('snake')">
+                                    <div class="card-tag">ULTRA CINEMATIC</div>
+                                    <div class="card-icon">🚂🚃</div>
+                                    <div class="card-title">LOCAL TRAIN SNAKE</div>
+                                    <div class="card-desc">Drive the Bandra West local train. Pick up commuters and don't let the train crash!</div>
+                                    <button class="card-play-btn">PLAY SIMULATOR</button>
+                                </div>
+                                <!-- Card 2: Sudoku (Bandra Auto-Rickshaw Sudoku) -->
+                                <div class="netflix-card" onclick="launchArcadeGame('sudoku')">
+                                    <div class="card-tag">BRAIN TEASER</div>
+                                    <div class="card-icon">🔢🛺</div>
+                                    <div class="card-title">RICKSHAW FARE SUDOKU</div>
+                                    <div class="card-desc">Fit fare indices on Bandra's meter grid. A fully playable 9x9 Sudoku champion solver.</div>
+                                    <button class="card-play-btn">PLAY SIMULATOR</button>
+                                </div>
+                                <!-- Card 3: Chess (Carter Road Chess Master) -->
+                                <div class="netflix-card" onclick="launchArcadeGame('chess')">
+                                    <div class="card-tag">PLAY VS AI</div>
+                                    <div class="card-icon">♟️👑</div>
+                                    <div class="card-title">CARTER ROAD CHESS</div>
+                                    <div class="card-desc">Challenge the legendary beach chess master to an automated grand match.</div>
+                                    <button class="card-play-btn">PLAY SIMULATOR</button>
+                                </div>
+                                <!-- Card 4: Pac-Man (Mount Mary Pac-Man) -->
+                                <div class="netflix-card" onclick="launchArcadeGame('pacman')">
+                                    <div class="card-tag">CLASSIC MAZE</div>
+                                    <div class="card-icon">👻🟡</div>
+                                    <div class="card-title">MOUNT MARY PAC-MAN</div>
+                                    <div class="card-desc">Evade traffic police ghosts. Eat coins & drink cutting chais for special power-up!</div>
+                                    <button class="card-play-btn">PLAY SIMULATOR</button>
+                                </div>
+                                <!-- Card 5: Road Rage (Auto Rickshaw Road Rage) -->
+                                <div class="netflix-card" onclick="launchArcadeGame('roadrage')">
+                                    <div class="card-tag">FAST ACTION</div>
+                                    <div class="card-icon">🛺🔥</div>
+                                    <div class="card-title">RICKSHAW ROAD RAGE</div>
+                                    <div class="card-desc">Steer your auto-rickshaw across highway lanes. Evade private cars & highway potholes!</div>
+                                    <button class="card-play-btn">PLAY SIMULATOR</button>
+                                </div>
+                                <!-- Card 6: Ludo (Bandra Junction Ludo) -->
+                                <div class="netflix-card" onclick="launchArcadeGame('ludo')">
+                                    <div class="card-tag">BOARD GAME</div>
+                                    <div class="card-icon">🎲🏆</div>
+                                    <div class="card-title">BANDRA JUNCTION LUDO</div>
+                                    <div class="card-desc">Roll a real interactive 3D dice and beat the computer token to Bandra terminal.</div>
+                                    <button class="card-play-btn">PLAY SIMULATOR</button>
+                                </div>
+                            </div>
+
+                            <!-- MULTIPLAYER NETWORK LOUNGE -->
+                            <div class="multiplayer-network-lounge" style="margin-top: 32px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; padding-bottom: 24px;">
+                                <!-- Left side: Voice & Friends list -->
+                                <div class="voice-chat-widget">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                        <h3 style="color: var(--cyan); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.05em;">🔴 BANDRA LIVE COMMS</h3>
+                                        <span class="mic-status-label" id="micStatusLabel">MIC OFF</span>
+                                    </div>
+                                    
+                                    <!-- Dynamic Waveform visualizer -->
+                                    <div class="lobby-visualizer" id="lobbyVisualizer">
+                                        <div class="visualizer-bar" style="height: 10%"></div>
+                                        <div class="visualizer-bar" style="height: 10%"></div>
+                                        <div class="visualizer-bar" style="height: 10%"></div>
+                                        <div class="visualizer-bar" style="height: 10%"></div>
+                                        <div class="visualizer-bar" style="height: 10%"></div>
+                                        <div class="visualizer-bar" style="height: 10%"></div>
+                                        <div class="visualizer-bar" style="height: 10%"></div>
+                                        <div class="visualizer-bar" style="height: 10%"></div>
+                                        <div class="visualizer-bar" style="height: 10%"></div>
+                                        <div class="visualizer-bar" style="height: 10%"></div>
+                                        <div class="visualizer-bar" style="height: 10%"></div>
+                                        <div class="visualizer-bar" style="height: 10%"></div>
+                                    </div>
+
+                                    <button class="voice-mic-btn" id="voiceMicBtn" onclick="toggleMultiplayerVoiceMic()">🎤 CONNECT MICROPHONE</button>
+                                    
+                                    <div class="online-friends-list" style="margin-top: 8px;">
+                                        <h4 style="font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 900; margin-bottom: 4px;">FRIENDS ONLINE</h4>
+                                        <div class="friend-row">
+                                            <div class="friend-meta-group">
+                                                <div class="friend-avatar" style="background: #ff008c; color: #fff; font-weight:bold;">K</div>
+                                                <div>
+                                                    <span class="friend-name">Kabir_Skatz</span>
+                                                    <span class="friend-game-status">In Snake Crawler</span>
+                                                </div>
+                                            </div>
+                                            <span class="friend-mic-indicator" id="friend-mic-1">🎙️</span>
+                                        </div>
+                                        <div class="friend-row">
+                                            <div class="friend-meta-group">
+                                                <div class="friend-avatar" style="background: #00ff66; color: #000; font-weight:bold;">R</div>
+                                                <div>
+                                                    <span class="friend-name">Rhea_Chapel</span>
+                                                    <span class="friend-game-status">Ready to play</span>
+                                                </div>
+                                            </div>
+                                            <span class="friend-mic-indicator" id="friend-mic-2">🎙️</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right side: Lobby Live Text Feed Chat -->
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <h3 style="color: var(--yellow); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase;">💬 LOBBY PUBLIC FEED</h3>
+                                    <div class="lobby-chat-widget">
+                                        <div class="lobby-chat-feed" id="lobbyChatFeed">
+                                            <div class="chat-line"><span class="chat-system">[SYSTEM] Welcome to Bandra Retro Net! Connecting to chat stream...</span></div>
+                                            <div class="chat-line"><span class="chat-system">[SYSTEM] Rhea_Chapel connected to lobby.</span></div>
+                                            <div class="chat-line"><span class="chat-user">Rhea_Chapel:</span> <span class="chat-text">Skaters gathered at Pali Hill! Who wants to play Chess vs the Master?</span></div>
+                                            <div class="chat-line"><span class="chat-user">Kabir_Skatz:</span> <span class="chat-text">Just scored 12 coaches on Train Snake. Beat my high score! 🚂🔥</span></div>
+                                        </div>
+                                        <div class="lobby-chat-input-bar">
+                                            <input type="text" class="lobby-chat-input" id="lobbyChatInput" placeholder="Type message in cyber lobby..." onkeydown="handleLobbyChatKey(event)">
+                                            <button class="lobby-chat-send-btn" onclick="sendLobbyChatMessage()">SEND</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Deals Panel -->
+                <div id="panel-deals" class="modal-panel" style="display: none; padding: 24px;">
+                    <div class="deals-layout">
+                        <!-- LUXURIOUS RED, ORANGE, AND GOLD MEGA DEALS HERO BANNER -->
+                        <div class="deals-hero-banner" style="background: linear-gradient(135deg, #2d0004 0%, #100002 50%, #200a00 100%); border: 2px solid #ff7a00; border-radius: 16px; padding: 24px 28px; position: relative; overflow: hidden; margin-bottom: 24px; box-shadow: 0 12px 35px rgba(217, 4, 41, 0.25), inset 0 0 20px rgba(255, 122, 0, 0.1);">
+                            <!-- Ambient Glow Circles -->
+                            <div style="position: absolute; top: -40px; right: -40px; width: 140px; height: 140px; background: radial-gradient(circle, rgba(255, 122, 0, 0.25) 0%, transparent 70%); filter: blur(25px); pointer-events: none;"></div>
+                            <div style="position: absolute; bottom: -40px; left: -40px; width: 160px; height: 160px; background: radial-gradient(circle, rgba(217, 4, 41, 0.2) 0%, transparent 70%); filter: blur(30px); pointer-events: none;"></div>
+                            <div style="position: absolute; inset: 0; background-image: radial-gradient(rgba(255, 183, 0, 0.12) 1px, transparent 1px); background-size: 16px 16px; opacity: 0.3; pointer-events: none;"></div>
+                            
+                            <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 16px; position: relative; z-index: 2;">
+                                <div style="max-width: 600px;">
+                                    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                        <span style="background: linear-gradient(90deg, #d90429, #ff5e00); color: #fff; font-size: 0.62rem; font-weight: 900; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1.5px; box-shadow: 0 0 10px rgba(217, 4, 41, 0.4);">⚡ MEGA DISCOUNTS LIVE</span>
+                                        <span style="background: rgba(255, 158, 0, 0.1); border: 1.5px solid #ff9e00; color: #ff9e00; font-size: 0.68rem; font-weight: 800; padding: 3px 10px; border-radius: 6px; font-family: monospace; letter-spacing: 1px; display: flex; align-items: center; gap: 4px;">
+                                            ⏳ ENDS IN: <span id="heroCountdownTimer" style="font-weight: 900; color: #fff; text-shadow: 0 0 4px #ff9e00;">02:44:18</span>
+                                        </span>
+                                    </div>
+                                    <h2 style="color: #fff; font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 900; line-height: 1.2; margin: 0 0 6px 0; letter-spacing: 0.3px; background: linear-gradient(45deg, #fff 40%, #ffcc00 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Bandra Premium Reserve: Limited Weekend Privileges!</h2>
+                                    <p style="color: rgba(255,255,255,0.78); font-size: 0.78rem; margin: 0 0 14px 0; line-height: 1.45;">Redeem elite dining offers, luxury cafe waivers, and designer street wear markdowns. Valid across Pali Hill, Carter Road, and Hill Road today only.</p>
+                                    
+                                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                        <div style="display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.4); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255, 158, 0, 0.25);">
+                                            <span style="color: #ffd700; font-size: 0.75rem;">👑</span> <span style="font-size: 0.62rem; color: #fff; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; font-family: monospace;">GOLD EXCLUSIVE</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.4); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(217, 4, 41, 0.25);">
+                                            <span style="color: #ff5e00; font-size: 0.75rem;">🔥</span> <span style="font-size: 0.62rem; color: #fff; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; font-family: monospace;">8 LIVE OFFERS</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- GORGEOUS NEON DYNAMIC SPONSORED BANNER (SUB-BANNER IN LUXURY STYLE) -->
+                        <div class="deals-ad-banner" style="background: linear-gradient(135deg, #120305 0%, #2a0a03 50%, #120305 100%); border: 1.5px solid rgba(255, 122, 0, 0.4); border-radius: 12px; padding: 12px 20px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; box-shadow: 0 4px 15px rgba(255,94,0,0.15);">
+                            <div class="ad-banner-neon-glow" style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255, 122, 0, 0.08) 0%, transparent 60%); pointer-events: none; animation: spinAdBg 20s linear infinite;"></div>
+                            <div style="flex: 1; z-index: 1;">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
+                                    <span style="background: linear-gradient(90deg, #ff9e00, #ff5e00); color: #000; font-size: 0.58rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px;">SPONSOR SPOTLIGHT</span>
+                                    <span style="background: rgba(0, 255, 100, 0.1); border: 1px solid #00ff66; color: #00ff66; font-size: 0.55rem; font-weight: 800; padding: 1px 5px; border-radius: 20px; font-family: monospace; animation: textBlinkGlow 1.5s infinite alternate;">● ACTIVE</span>
+                                </div>
+                                <h3 id="adBannerTitle" style="color: #fff; font-size: 0.9rem; font-weight: 800; margin: 2px 0 1px 0; letter-spacing: 0.3px; font-family: 'Inter', sans-serif;">☕ SPOTLIGHT YOUR CAFE HERE!</h3>
+                                <p id="adBannerDesc" style="color: rgba(255,255,255,0.7); font-size: 0.7rem; margin: 0; line-height: 1.3;">Promote your neighborhood hub for 50 Chai Points. Tap Sell Space to begin!</p>
+                            </div>
+                            <button onclick="filterDealsCategory('ads', document.getElementById('ad-slots-pill'))" style="background: linear-gradient(135deg, #ffd700, #ff7a00); border: none; border-radius: 8px; color: #000; font-weight: 900; font-size: 0.65rem; padding: 8px 14px; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 10px rgba(255, 122, 0, 0.25); text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0; z-index: 1; font-family: monospace;">SELL SPACE</button>
+                        </div>
+
+                        <div class="deals-header" style="border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 18px; margin-bottom: 24px;">
+                            <div class="shelf-title-row" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px;">
+                                <h2 class="shelf-title" style="background: linear-gradient(45deg, #ff7a00, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; font-size: 1.35rem; font-weight: 900; letter-spacing: 0.5px; font-family: 'Inter', sans-serif;">EXPLORE HOT URBAN DEALS</h2>
+                                <span class="shelf-badge" style="background: linear-gradient(135deg, #ff5e00, #ffd700); color: #000; font-weight: 900; font-size: 0.58rem; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; box-shadow: 0 0 10px rgba(255, 94, 0, 0.3);">PREMIUM TIERS</span>
+                            </div>
+                            
+                            <!-- Search & Category Controls with Gold styling -->
+                            <div class="shelf-controls" style="margin-top: 16px; display: flex; flex-direction: column; gap: 12px;">
+                                <div class="shelf-search-wrapper" style="position: relative; background: rgba(20,5,5,0.6); border: 1.5px solid rgba(255,122,0,0.15); border-radius: 10px; display: flex; align-items: center; padding: 2px 14px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);">
+                                    <span class="search-icon" style="font-size: 0.9rem; margin-right: 10px; opacity: 0.7; color: #ff9e00;">🔍</span>
+                                    <input type="text" id="dealsSearchInput" placeholder="Search premium deals, local bistros, kicks..." oninput="filterDeals()" style="width: 100%; background: transparent; border: none; padding: 10px 0; color: #fff; font-size: 0.8rem; outline: none; font-family: 'Inter', sans-serif;">
+                                </div>
+                                <div class="shelf-filter-bar" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <button class="filter-pill active" onclick="filterDealsCategory('all', this)" style="border-radius: 20px;">ALL OFFERS</button>
+                                    <button class="filter-pill" onclick="filterDealsCategory('food', this)" style="border-radius: 20px;">🍔 STREET FOOD</button>
+                                    <button class="filter-pill" onclick="filterDealsCategory('clothes', this)" style="border-radius: 20px;">👗 APPAREL & KICKS</button>
+                                    <button class="filter-pill" onclick="filterDealsCategory('tech', this)" style="border-radius: 20px;">⚡ GADGETS & SOUND</button>
+                                    <button class="filter-pill" onclick="filterDealsCategory('mega', this)" style="border-radius: 20px;">🔥 MEGA DISCOUNTS</button>
+                                    <button class="filter-pill" id="ad-slots-pill" onclick="filterDealsCategory('ads', this)" style="border: 1px dashed #ff9e00 !important; color: #ff9e00 !important; background: rgba(255,158,0,0.06) !important; border-radius: 20px;">📢 SELL AD SLOTS</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid of Lip-Smacking Deals -->
+                        <div class="shelf-scroll-container" style="max-height: 48vh; overflow-y: auto; padding-right: 4px;">
+                            <div class="deals-grid" id="dealsGrid">
+                                <!-- DEAL 1 -->
+                                <div class="deal-coupon-card" data-category="food" data-search="free chai bun-maska bandstand tapri street food tea">
+                                    <div class="deal-discount-ribbon">50% OFF</div>
+                                    <div class="coupon-price-badge">10 CHAI PTS</div>
+                                    <div class="coupon-content">
+                                        <span class="deal-tag-neon tag-food">🍔 STREET FOOD</span>
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                            <span style="font-size: 1.6rem; background: rgba(255,122,0,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,122,0,0.25);">☕</span>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 0.98rem; font-weight: 900; color: #fff;">FREE CHAI & BUN-MASKA</h3>
+                                                <p class="coupon-vendor" style="margin: 0; font-size: 0.68rem; color: #ffb700;">Bandstand Tapri Co.</p>
+                                            </div>
+                                        </div>
+                                        <p class="coupon-details">Enjoy a hot, rich double cutting chai paired with buttered-to-the-brim bun-maska while overlooking the sea.</p>
+                                        
+                                        <!-- Interactive stock row -->
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-family: monospace; font-size: 0.68rem; color: rgba(255, 255, 255, 0.45); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+                                            <span>⏳ Ends in <span class="card-countdown" data-time="5400">01:30:00</span></span>
+                                            <span style="color: #ff5e00; font-weight: 700;">🔥 14 claimed today</span>
+                                        </div>
+                                        
+                                        <button class="redeem-btn" onclick="redeemVoucher('Bandstand Tapri Co.', 10)">REDEEM NOW</button>
+                                    </div>
+                                </div>
+                                <!-- DEAL 2 -->
+                                <div class="deal-coupon-card" data-category="food" data-search="sourdough pizza slice pali hill crusts garlic bread">
+                                    <div class="deal-discount-ribbon">30% OFF</div>
+                                    <div class="coupon-price-badge">INSTANT FREE</div>
+                                    <div class="coupon-content">
+                                        <span class="deal-tag-neon tag-food">🍕 CRAFT FOOD</span>
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                            <span style="font-size: 1.6rem; background: rgba(255,122,0,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,122,0,0.25);">🍕</span>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 0.98rem; font-weight: 900; color: #fff;">SOURDOUGH PIZZA</h3>
+                                                <p class="coupon-vendor" style="margin: 0; font-size: 0.68rem; color: #ffb700;">Pali Hill Crusts</p>
+                                            </div>
+                                        </div>
+                                        <p class="coupon-details">Instant voucher for a gorgeous, light-as-air sourdough pizza topped with organic local ingredients.</p>
+                                        
+                                        <!-- Interactive stock row -->
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-family: monospace; font-size: 0.68rem; color: rgba(255, 255, 255, 0.45); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+                                            <span>⏳ Ends in <span class="card-countdown" data-time="9000">02:30:00</span></span>
+                                            <span style="color: #ff9e00; font-weight: 700;">⚡ Limited Stock</span>
+                                        </div>
+                                        
+                                        <button class="redeem-btn" onclick="redeemVoucher('Pali Hill Crusts', 0)">GET CODE</button>
+                                    </div>
+                                </div>
+                                <!-- DEAL 3 -->
+                                <div class="deal-coupon-card" data-category="food" data-search="bogo bubble waffles carter road sweets ice cream">
+                                    <div class="deal-discount-ribbon">BOGO</div>
+                                    <div class="coupon-price-badge">25 CHAI PTS</div>
+                                    <div class="coupon-content">
+                                        <span class="deal-tag-neon tag-food"> waffle 🧇 DESSERTS</span>
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                            <span style="font-size: 1.6rem; background: rgba(255,122,0,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,122,0,0.25);">🧇</span>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 0.98rem; font-weight: 900; color: #fff;">BOGO BUBBLE WAFFLES</h3>
+                                                <p class="coupon-vendor" style="margin: 0; font-size: 0.68rem; color: #ffb700;">Carter Road Sweets</p>
+                                            </div>
+                                        </div>
+                                        <p class="coupon-details">Buy one freshly-baked crispy chocolate bubble waffle and get the second one completely free!</p>
+                                        
+                                        <!-- Interactive stock row -->
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-family: monospace; font-size: 0.68rem; color: rgba(255, 255, 255, 0.45); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+                                            <span>⏳ Ends in <span class="card-countdown" data-time="14400">04:00:00</span></span>
+                                            <span style="color: #ff5e00; font-weight: 700;">🔥 22 claimed recently</span>
+                                        </div>
+                                        
+                                        <button class="redeem-btn" onclick="redeemVoucher('Carter Road Sweets', 25)">REDEEM NOW</button>
+                                    </div>
+                                </div>
+                                <!-- DEAL 4 -->
+                                <div class="deal-coupon-card" data-category="clothes" data-search="vintage oversized tees shirt hill road thrift street wear">
+                                    <div class="deal-discount-ribbon">60% OFF</div>
+                                    <div class="coupon-price-badge">20 CHAI PTS</div>
+                                    <div class="coupon-content">
+                                        <span class="deal-tag-neon tag-clothes">👗 THRIFT APPAREL</span>
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                            <span style="font-size: 1.6rem; background: rgba(217,4,41,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(217,4,41,0.25);">👕</span>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 0.98rem; font-weight: 900; color: #fff;">VINTAGE TEES</h3>
+                                                <p class="coupon-vendor" style="margin: 0; font-size: 0.68rem; color: #ffb700;">Hill Road Thrift</p>
+                                            </div>
+                                        </div>
+                                        <p class="coupon-details">Get heavy-cotton vintage aesthetic tees featuring anime, rock band, and high-street graphic prints.</p>
+                                        
+                                        <!-- Interactive stock row -->
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-family: monospace; font-size: 0.68rem; color: rgba(255, 255, 255, 0.45); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+                                            <span>⏳ Ends in <span class="card-countdown" data-time="18000">05:00:00</span></span>
+                                            <span style="color: #ff3355; font-weight: 700;">⚡ 4 left in stock!</span>
+                                        </div>
+                                        
+                                        <button class="redeem-btn" onclick="redeemVoucher('Hill Road Thrift', 20)">REDEEM NOW</button>
+                                    </div>
+                                </div>
+                                <!-- DEAL 5 -->
+                                <div class="deal-coupon-card" data-category="clothes mega" data-search="custom bandra sneakers shoes linking road kicks trainers">
+                                    <div class="deal-discount-ribbon">MEGA SAVE</div>
+                                    <div class="coupon-price-badge">INSTANT FREE</div>
+                                    <div class="coupon-content">
+                                        <span class="deal-tag-neon tag-mega">🔥 MEGA DISC</span>
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                            <span style="font-size: 1.6rem; background: rgba(217,4,41,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(217,4,41,0.25);">👟</span>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 0.98rem; font-weight: 900; color: #fff;">FLAT ₹1,000 OFF KICKS</h3>
+                                                <p class="coupon-vendor" style="margin: 0; font-size: 0.68rem; color: #ffb700;">Linking Road Kicks</p>
+                                            </div>
+                                        </div>
+                                        <p class="coupon-details">Redeem an instant store discount on custom sneakers, chunky trainers, or limited street releases.</p>
+                                        
+                                        <!-- Interactive stock row -->
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-family: monospace; font-size: 0.68rem; color: rgba(255, 255, 255, 0.45); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+                                            <span>⏳ Ends in <span class="card-countdown" data-time="3600">01:00:00</span></span>
+                                            <span style="color: #ff2a00; font-weight: 700;">🔥 47 claimed today</span>
+                                        </div>
+                                        
+                                        <button class="redeem-btn" onclick="redeemVoucher('Linking Road Kicks', 0)">GET CODE</button>
+                                    </div>
+                                </div>
+                                <!-- DEAL 6 -->
+                                <div class="deal-coupon-card" data-category="tech" data-search="noise cancelling earbuds wireless earphone sardar electronics sound">
+                                    <div class="deal-discount-ribbon">75% OFF</div>
+                                    <div class="coupon-price-badge">INSTANT FREE</div>
+                                    <div class="coupon-content">
+                                        <span class="deal-tag-neon tag-tech">⚡ AUDIO GADGETS</span>
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                            <span style="font-size: 1.6rem; background: rgba(255,183,0,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,183,0,0.25);">🎧</span>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 0.98rem; font-weight: 900; color: #fff;">HYBRID ANC BUDS</h3>
+                                                <p class="coupon-vendor" style="margin: 0; font-size: 0.68rem; color: #ffb700;">Sardar Electronics</p>
+                                            </div>
+                                        </div>
+                                        <p class="coupon-details">Unbelievable discount code on high-performance noise-cancelling wireless stereo earbuds.</p>
+                                        
+                                        <!-- Interactive stock row -->
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-family: monospace; font-size: 0.68rem; color: rgba(255, 255, 255, 0.45); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+                                            <span>⏳ Ends in <span class="card-countdown" data-time="21600">06:00:00</span></span>
+                                            <span style="color: #ffcc00; font-weight: 700;">⚡ Rare Privilege</span>
+                                        </div>
+                                        
+                                        <button class="redeem-btn" onclick="redeemVoucher('Sardar Electronics', 0)">GET CODE</button>
+                                    </div>
+                                </div>
+                                <!-- DEAL 7 -->
+                                <div class="deal-coupon-card" data-category="food" data-search="chai latte ice cream scoop pali naka scoops desserts">
+                                    <div class="deal-discount-ribbon">FREE SCOOP</div>
+                                    <div class="coupon-price-badge">15 CHAI PTS</div>
+                                    <div class="coupon-content">
+                                        <span class="deal-tag-neon tag-food">🍦 ICE CREAM</span>
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                            <span style="font-size: 1.6rem; background: rgba(255,122,0,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,122,0,0.25);">🍦</span>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 0.98rem; font-weight: 900; color: #fff;">FREE SCOOP CHAI-LATTE</h3>
+                                                <p class="coupon-vendor" style="margin: 0; font-size: 0.68rem; color: #ffb700;">Pali Naka Scoops</p>
+                                            </div>
+                                        </div>
+                                        <p class="coupon-details">Try Bandra's original spicy chai-latte infused double-cream scoop of artisanal house ice cream.</p>
+                                        
+                                        <!-- Interactive stock row -->
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-family: monospace; font-size: 0.68rem; color: rgba(255, 255, 255, 0.45); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+                                            <span>⏳ Ends in <span class="card-countdown" data-time="10800">03:00:00</span></span>
+                                            <span style="color: #ff5e00; font-weight: 700;">🔥 9 claimed today</span>
+                                        </div>
+                                        
+                                        <button class="redeem-btn" onclick="redeemVoucher('Pali Naka Scoops', 15)">REDEEM NOW</button>
+                                    </div>
+                                </div>
+                                <!-- DEAL 8 -->
+                                <div class="deal-coupon-card" data-category="tech mega" data-search="mini bluetooth speaker bandra station bazaar music boombox">
+                                    <div class="deal-discount-ribbon">80% OFF</div>
+                                    <div class="coupon-price-badge">40 CHAI PTS</div>
+                                    <div class="coupon-content">
+                                        <span class="deal-tag-neon tag-mega">⚡ MEGA DISCOUNTS</span>
+                                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                            <span style="font-size: 1.6rem; background: rgba(255,183,0,0.12); width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,183,0,0.25);">📻</span>
+                                            <div>
+                                                <h3 style="margin: 0; font-size: 0.98rem; font-weight: 900; color: #fff;">MINI WATERPROOF BOOMBOX</h3>
+                                                <p class="coupon-vendor" style="margin: 0; font-size: 0.68rem; color: #ffb700;">Station Bazaar Electro</p>
+                                            </div>
+                                        </div>
+                                        <p class="coupon-details">Claim an 80% discount on punchy mini Bluetooth speakers. Perfect for skateparks and house parties.</p>
+                                        
+                                        <!-- Interactive stock row -->
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-family: monospace; font-size: 0.68rem; color: rgba(255, 255, 255, 0.45); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+                                            <span>⏳ Ends in <span class="card-countdown" data-time="4800">01:20:00</span></span>
+                                            <span style="color: #ff9e00; font-weight: 700;">⚡ Only 3 remaining!</span>
+                                        </div>
+                                        
+                                        <button class="redeem-btn" onclick="redeemVoucher('Station Bazaar Electro', 40)">REDEEM NOW</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DYNAMIC AD MARKETPLACE SLOT BUYER -->
+                        <div id="adMarketplaceContainer" style="display: none; background: rgba(20, 5, 5, 0.85); border: 1.5px solid rgba(255, 122, 0, 0.3); border-radius: 12px; padding: 20px; margin-top: 10px; box-shadow: inset 0 0 15px rgba(255, 122, 0, 0.05);">
+                            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255, 122, 0, 0.15); padding-bottom: 10px; margin-bottom: 16px;">
+                                <h3 style="color: #ffb700; font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 900; margin: 0; display: flex; align-items: center; gap: 8px;">📢 COMMUNITY AD EXCHANGE</h3>
+                                <span style="background: rgba(255, 122, 0, 0.1); border: 1.5px solid #ff9e00; color: #ff9e00; font-size: 0.65rem; font-weight: 900; padding: 3px 8px; border-radius: 20px; font-family: monospace;">BOOK WITH CHAI PTS</span>
+                            </div>
+                            <p style="font-size: 0.78rem; color: rgba(255, 255, 255, 0.75); margin-bottom: 20px; line-height: 1.4;">Spotlight your neighborhood home business, cafe offer, or thrift collection live at the top of the Bandra Deals dashboard! Rents are paid using community Chai Points earned by tapping the sidebar teapot.</p>
+                            
+                            <div class="ad-spots-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px;">
+                                <!-- SPOT 1: TOP SPONSORED BANNER -->
+                                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255, 230, 0, 0.3); border-radius: 8px; padding: 14px; position: relative;">
+                                    <span style="position: absolute; top: 10px; right: 10px; font-size: 0.62rem; background: var(--yellow); color: #000; font-weight: 900; padding: 1px 5px; border-radius: 3px; text-transform: uppercase;">RECOMMENDED</span>
+                                    <h4 style="color: #fff; font-size: 0.82rem; font-weight: 700; margin: 0 0 6px 0;">SPOT 1: HEADLINE BANNER</h4>
+                                    <p style="color: rgba(255,255,255,0.5); font-size: 0.7rem; margin: 0 0 12px 0;">Large horizontal card shown prominently to all local buyers at the very top of the deals shelf.</p>
+                                    <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
+                                        <span style="color: var(--yellow); font-weight: 800;">50 CHAI PTS</span>
+                                        <span style="color: #00ff66; font-weight: 700;">🟢 AVAILABLE INSTANTLY</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- SPOT 2: SIDEBAR CAROUSEL -->
+                                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 14px; opacity: 0.75; position: relative;">
+                                    <h4 style="color: #aaa; font-size: 0.82rem; font-weight: 700; margin: 0 0 6px 0;">SPOT 2: SIDEBAR TILE</h4>
+                                    <p style="color: rgba(255,255,255,0.4); font-size: 0.7rem; margin: 0 0 12px 0;">Medium tile display placed in the sidebar frame for ongoing community showcase loops.</p>
+                                    <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
+                                        <span style="color: #888; font-weight: 800;">30 CHAI PTS</span>
+                                        <span style="color: #ff003c; font-weight: 700;">🔴 LOCKED / BOOKED</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- AD BOOKING FORM -->
+                            <div style="background: rgba(255,255,255,0.03); border: 1.5px dashed rgba(255,255,255,0.08); border-radius: 10px; padding: 16px;">
+                                <h4 style="color: #fff; font-size: 0.85rem; font-weight: 700; margin: 0 0 12px 0; display: flex; align-items: center; gap: 6px;">✍️ LAUNCH SPONSORSHIP CAMPAIGN</h4>
+                                <form onsubmit="buyAdSpace(event)" style="display: flex; flex-direction: column; gap: 12px;">
+                                    <div>
+                                        <label style="display: block; font-size: 0.65rem; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Business / Joint Name</label>
+                                        <input type="text" id="adBizName" placeholder="e.g. Pali Hill Crusts, Carter Road skaters..." required maxlength="30" style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 8px 12px; color: #fff; font-size: 0.8rem; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--yellow)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                                    </div>
+                                    <div>
+                                        <label style="display: block; font-size: 0.65rem; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Slogan / Pitch / Promotional Offer</label>
+                                        <input type="text" id="adBizSlogan" placeholder="e.g. Free garlic bread on orders over 300! Tap Get Code!" required maxlength="60" style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 8px 12px; color: #fff; font-size: 0.8rem; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--yellow)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                                    </div>
+                                    <button type="submit" style="background: linear-gradient(135deg, var(--yellow), #ffa200); border: none; border-radius: 6px; color: #000; font-weight: 900; font-size: 0.8rem; padding: 12px; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(255, 230, 0, 0.2); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px;">PUBLISH SPONSORSHIP BANNER (50 PTS)</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Active Voucher Claim State -->
+                        <div id="voucherClaimBox" class="voucher-claim-box" style="display: none;">
+                            <div class="claim-glow"></div>
+                            <h3>HOLOGRAPHIC CLAIM BADGE</h3>
+                            <div class="claim-details">
+                                <div class="claim-row"><span>VENDOR:</span><strong id="claimVendor">Bandstand Tapri Co.</strong></div>
+                                <div class="claim-row">
+                                    <span>VOUCHER CODE:</span>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <strong id="claimCode" class="neon-text-blink">HUSTLE99</strong>
+                                        <button id="activeClaimCopyBtn" onclick="copyActiveClaimCode()" style="background: rgba(0, 229, 255, 0.15); border: 1px solid rgba(0, 229, 255, 0.4); color: var(--cyan); border-radius: 4px; font-size: 0.58rem; font-weight: 800; padding: 2px 6px; cursor: pointer; transition: all 0.2s; outline: none; text-transform: uppercase;">COPY</button>
+                                    </div>
+                                </div>
+                                <div class="claim-row"><span>EXPIRES IN:</span><strong id="claimTimer">05:00</strong></div>
+                            </div>
+                            <div class="claim-qr">
+                                <!-- Simulated glowing vector QR representation -->
+                                <div class="simulated-qr">
+                                    <div class="qr-dot-row"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                                    <div class="qr-dot-row"><span></span><span class="empty"></span><span></span><span class="empty"></span><span></span><span></span></div>
+                                    <div class="qr-dot-row"><span></span><span></span><span class="empty"></span><span></span><span class="empty"></span><span></span></div>
+                                    <div class="qr-dot-row"><span></span><span class="empty"></span><span></span><span class="empty"></span><span></span><span></span></div>
+                                    <div class="qr-dot-row"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                                </div> <!-- Close simulated-qr -->
+                            </div> <!-- Close claim-qr -->
+                        </div> <!-- Close voucherClaimBox -->
+
+                        <!-- MY SAVED VOUCHERS WALLET -->
+                        <div id="myVouchersWallet" style="margin-top: 32px; border-top: 1.5px dashed rgba(255, 255, 255, 0.1); padding-top: 24px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                                <h3 style="color: #fff; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 800; display: flex; align-items: center; gap: 8px; margin: 0;">
+                                    <span>👛</span> MY SAVED WALLET 
+                                    <span id="walletCountBadge" style="background: var(--pink); color: #fff; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; font-weight: 900; margin-left: 4px;">0</span>
+                                </h3>
+                                <button onclick="clearVoucherWallet()" style="background: rgba(255,0,50,0.1); border: 1px solid rgba(255,0,50,0.2); border-radius: 6px; color: #ff3355; font-size: 0.65rem; font-weight: 800; padding: 6px 12px; cursor: pointer; transition: all 0.2s;">CLEAR WALLET</button>
+                            </div>
+                            
+                            <div id="walletEmptyState" style="background: rgba(255,255,255,0.02); border: 1.5px dashed rgba(255,255,255,0.05); border-radius: 12px; padding: 32px; text-align: center;">
+                                <span style="font-size: 1.8rem; display: block; margin-bottom: 8px; opacity: 0.5;">🎟️</span>
+                                <p style="font-size: 0.78rem; color: rgba(255,255,255,0.5); margin: 0;">Your wallet is empty. Redeem street food discounts or apparel deals using Chai Points to save your voucher codes here!</p>
+                            </div>
+                            
+                            <div id="walletGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+                                <!-- Dynamically populated wallet vouchers -->
+                            </div>
+                        </div>
+                    </div> <!-- Close deals-layout -->
+                </div> <!-- Close panel-deals -->
+
+                    <!-- 4. Kids Coding Playground Panel (previously Docs) -->
+                    <div id="panel-docs" class="modal-panel" style="display: none; padding: 24px;">
+                    <!-- LANDING PAGE: GALLERY WALL & COURSE LIBRARY -->
+                    <div id="learning-hub-landing" style="display: block;">
+                        <!-- Classroom Header / Banner -->
+                        <div class="learning-header" style="background: linear-gradient(135deg, #102419 0%, #05130b 100%); border: 4px solid #5a3c1b; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: inset 0 0 20px rgba(0,255,100,0.1), 0 10px 30px rgba(0,0,0,0.6); position: relative; overflow: hidden; text-align: center;">
+                            <div style="position: absolute; top: -10px; right: -10px; font-size: 6rem; opacity: 0.05; transform: rotate(15deg); color: #00ff66; pointer-events: none;">🏫</div>
+                            <div style="font-family: monospace; font-size: 0.7rem; color: #00ff66; margin-bottom: 6px; letter-spacing: 3px; font-weight: 900;">⚡ MUMBAI'S FIRST CO-OPERATIVE STREET CODING WALL & CAMPUS ⚡</div>
+                            <h2 class="learning-main-title" style="background: linear-gradient(45deg, #00ffcc, #00ff66); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 4px 0 8px 0; font-weight: 900; font-size: 2.2rem; letter-spacing: 0.5px; font-family: 'Inter', sans-serif; text-transform: uppercase;">🎓 THE BANDRA KIDS CREATIVE GALLERY</h2>
+                            <p style="color: rgba(255,255,255,0.85); font-size: 0.92rem; max-width: 720px; margin: 0 auto 16px auto; line-height: 1.5; font-family: 'Inter', sans-serif;">
+                                Welcome to our block gallery! Run, remix and inspect active web apps and interactive canvas animations built and shared by neighborhood kids. Build your own track, tweak its values, and submit your custom code to pin it to our creative gallery wall!
+                            </p>
+                            <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+                                <button class="submit-collage-btn" onclick="openShowcaseSubmitModal()" style="background: linear-gradient(135deg, #ff008c, #00e5ff); border: none; border-radius: 8px; color: #000; font-weight: 900; font-size: 0.82rem; padding: 12px 24px; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(255,0,140,0.4); text-transform: uppercase; letter-spacing: 1px;">🚀 PUBLISH MY CREATION (+50 PTS)</button>
+                            </div>
+                        </div>
+
+                        <!-- Showcase Grid -->
+                        <div class="community-collage-section" style="margin-top: 0; padding-top: 0; margin-bottom: 30px;">
+                            <div class="collage-header-row" style="margin-bottom: 15px;">
+                                <div>
+                                    <h3 class="collage-title" style="color: #00f0ff; text-shadow: 0 0 10px rgba(0,240,255,0.2); font-size: 1.1rem; font-weight: 800;">🎨 ACTIVE GRADUATE COLLAGE & HALL OF FAME</h3>
+                                    <p class="collage-subtitle" style="font-size: 0.78rem; color: rgba(255,255,255,0.6);">Click any student creation card below to automatically load, run, and remix their source code instantly!</p>
+                                </div>
+                            </div>
+                            
+                            <div class="collage-masonry-grid" id="collageMasonryGrid">
+                                <!-- Dynamic Projects -->
+                            </div>
+                        </div>
+
+                        <!-- Courses Section -->
+                        <div class="courses-library-section" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; margin-bottom: 20px;">
+                            <h3 style="color: var(--yellow); font-size: 1.1rem; font-weight: 900; letter-spacing: 1px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif;">📚 CAMPUS COURSE LIBRARY</h3>
+                            <p style="color: rgba(255,255,255,0.5); font-size: 0.78rem; margin-bottom: 16px;">We have 6 interactive, progressive syllabus courses created by Pali Hill and Hill Road street coding professors. Tap a card to explore details or launch the track:</p>
+                            
+                            <div class="course-library-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px;">
+                                <!-- Course 1 -->
+                                <div class="course-library-card" onclick="openCourseDetails('beginner')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+                                    <div style="display: flex; align-items: center; gap: 14px;">
+                                        <span style="font-size: 1.4rem; background: rgba(0, 229, 255, 0.1); border-radius: 8px; padding: 8px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">🎨</span>
+                                        <div>
+                                            <h4 style="color: #fff; font-size: 0.88rem; font-weight: 700; margin: 0; font-family: 'Inter', sans-serif;">HTML/CSS Neon Graff (101)</h4>
+                                            <span style="color: #00e5ff; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; font-family: monospace;">Beginner • 3 Lessons</span>
+                                        </div>
+                                    </div>
+                                    <span style="color: #00ff66; font-size: 0.72rem; font-weight: 800; font-family: monospace; background: rgba(0,255,102,0.08); padding: 4px 8px; border-radius: 4px;">EXPLORE ➔</span>
+                                </div>
+
+                                <!-- Course 2 -->
+                                <div class="course-library-card" onclick="openCourseDetails('beginner_motion')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+                                    <div style="display: flex; align-items: center; gap: 14px;">
+                                        <span style="font-size: 1.4rem; background: rgba(0, 255, 102, 0.1); border-radius: 8px; padding: 8px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">⚡</span>
+                                        <div>
+                                            <h4 style="color: #fff; font-size: 0.88rem; font-weight: 700; margin: 0; font-family: 'Inter', sans-serif;">Cyberpunk Glitch (102)</h4>
+                                            <span style="color: #00ff66; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; font-family: monospace;">Beginner • 3 Lessons</span>
+                                        </div>
+                                    </div>
+                                    <span style="color: #00ff66; font-size: 0.72rem; font-weight: 800; font-family: monospace; background: rgba(0,255,102,0.08); padding: 4px 8px; border-radius: 4px;">EXPLORE ➔</span>
+                                </div>
+
+                                <!-- Course 3 -->
+                                <div class="course-library-card" onclick="openCourseDetails('intermediate')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+                                    <div style="display: flex; align-items: center; gap: 14px;">
+                                        <span style="font-size: 1.4rem; background: rgba(255, 0, 140, 0.1); border-radius: 8px; padding: 8px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">🔊</span>
+                                        <div>
+                                            <h4 style="color: #fff; font-size: 0.88rem; font-weight: 700; margin: 0; font-family: 'Inter', sans-serif;">Creative Audio & Synth (202)</h4>
+                                            <span style="color: #ff008c; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; font-family: monospace;">Intermediate • 4 Lessons</span>
+                                        </div>
+                                    </div>
+                                    <span style="color: #00ff66; font-size: 0.72rem; font-weight: 800; font-family: monospace; background: rgba(0,255,102,0.08); padding: 4px 8px; border-radius: 4px;">EXPLORE ➔</span>
+                                </div>
+
+                                <!-- Course 4 -->
+                                <div class="course-library-card" onclick="openCourseDetails('intermediate_animator')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+                                    <div style="display: flex; align-items: center; gap: 14px;">
+                                        <span style="font-size: 1.4rem; background: rgba(255, 0, 140, 0.1); border-radius: 8px; padding: 8px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">🛹</span>
+                                        <div>
+                                            <h4 style="color: #fff; font-size: 0.88rem; font-weight: 700; margin: 0; font-family: 'Inter', sans-serif;">Pixel Skater Animator (203)</h4>
+                                            <span style="color: #ff008c; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; font-family: monospace;">Intermediate • 4 Lessons</span>
+                                        </div>
+                                    </div>
+                                    <span style="color: #00ff66; font-size: 0.72rem; font-weight: 800; font-family: monospace; background: rgba(0,255,102,0.08); padding: 4px 8px; border-radius: 4px;">EXPLORE ➔</span>
+                                </div>
+
+                                <!-- Course 5 -->
+                                <div class="course-library-card" onclick="openCourseDetails('pro')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+                                    <div style="display: flex; align-items: center; gap: 14px;">
+                                        <span style="font-size: 1.4rem; background: rgba(255, 230, 0, 0.1); border-radius: 8px; padding: 8px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">🚀</span>
+                                        <div>
+                                            <h4 style="color: #fff; font-size: 0.88rem; font-weight: 700; margin: 0; font-family: 'Inter', sans-serif;">Full-App Local Clicker (303)</h4>
+                                            <span style="color: var(--yellow); font-size: 0.68rem; font-weight: 600; text-transform: uppercase; font-family: monospace;">Pro Hustle • 5 Lessons</span>
+                                        </div>
+                                    </div>
+                                    <span style="color: #00ff66; font-size: 0.72rem; font-weight: 800; font-family: monospace; background: rgba(0,255,102,0.08); padding: 4px 8px; border-radius: 4px;">EXPLORE ➔</span>
+                                </div>
+
+                                <!-- Course 6 -->
+                                <div class="course-library-card" onclick="openCourseDetails('pro_canvas')" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+                                    <div style="display: flex; align-items: center; gap: 14px;">
+                                        <span style="font-size: 1.4rem; background: rgba(255, 230, 0, 0.1); border-radius: 8px; padding: 8px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">🛺</span>
+                                        <div>
+                                            <h4 style="color: #fff; font-size: 0.88rem; font-weight: 700; margin: 0; font-family: 'Inter', sans-serif;">Retro Canvas Drift (404)</h4>
+                                            <span style="color: var(--yellow); font-size: 0.68rem; font-weight: 600; text-transform: uppercase; font-family: monospace;">Pro Hustle • 5 Lessons</span>
+                                        </div>
+                                    </div>
+                                    <span style="color: #00ff66; font-size: 0.72rem; font-weight: 800; font-family: monospace; background: rgba(0,255,102,0.08); padding: 4px 8px; border-radius: 4px;">EXPLORE ➔</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PLAYGROUND PAGE: INTERACTIVE WORKSPACE (HIDDEN BY DEFAULT) -->
+                    <div id="learning-hub-playground" style="display: none;">
+                        <div class="learning-playground-layout">
+                            <!-- Left Side: Tutorial Guidance & Courses -->
+                            <div class="learning-sidebar">
+                                <!-- CLASSROOM-THEMED NEON BLACKBOARD GRAPHICS -->
+                                <div class="learning-header" style="background: #142a1d; border: 4px solid #5a3c1b; border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: inset 0 0 15px rgba(0,255,100,0.1), 0 5px 15px rgba(0,0,0,0.5); position: relative; overflow: hidden;">
+                                    <div style="position: absolute; top: -10px; right: -10px; font-size: 5rem; opacity: 0.08; transform: rotate(15deg); color: #00ff66; pointer-events: none;">🏫</div>
+                                    <div style="font-family: monospace; font-size: 0.65rem; color: #00ff66; margin-bottom: 4px; letter-spacing: 2px;">⚡ MUMBAI CODING CLASSROOM v4.0</div>
+                                    <h2 class="learning-main-title" style="background: linear-gradient(45deg, #00ffcc, #00ff66); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 4px 0 6px 0; font-weight: 900; font-size: 1.15rem; letter-spacing: 0.5px; font-family: 'Inter', sans-serif;">🎓 HUSTLER CODING HUB</h2>
+                                    <span class="learning-meta-badge" style="background: #00ff66; color: #000; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; font-family: monospace; letter-spacing: 0.5px;">WORKSPACE ACTIVE</span>
+                                    
+                                    <!-- Retro chalkboard chalk-doodle stats -->
+                                    <div style="display: flex; gap: 12px; margin-top: 10px; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 10px; font-size: 0.72rem; color: rgba(255,255,255,0.7); font-family: monospace;">
+                                        <span>📚 <strong>6</strong> ACTIVE TRACKS</span>
+                                        <span>🧑‍💻 <strong>1,420</strong> ACTIVE HUSTLERS</span>
+                                    </div>
+                                </div>
+                                
+                                <p class="learning-tagline" style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-bottom: 12px;">Modify code in editor, run it to preview, then publish your creation to the Bandra Creative Wall!</p>
+                                
+                                <div class="learning-tracks" style="display: flex; flex-direction: column; gap: 8px; max-height: 160px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.08); padding: 8px; border-radius: 8px; background: rgba(0,0,0,0.15);">
+                                    <div class="learning-track-card active" onclick="loadLearningTrack('beginner', this)">
+                                        <div class="track-icon">🎨</div>
+                                        <div class="track-info">
+                                            <div class="track-level">BEGINNER TRACK (101)</div>
+                                            <div class="track-title" style="font-size: 0.7rem;">Cyber-Graffiti Neon Header</div>
+                                        </div>
+                                    </div>
+                                    <div class="learning-track-card" onclick="loadLearningTrack('beginner_motion', this)">
+                                        <div class="track-icon">⚡</div>
+                                        <div class="track-info">
+                                            <div class="track-level">BEGINNER MOTION (102)</div>
+                                            <div class="track-title" style="font-size: 0.7rem;">Cyberpunk Glitch & Motion</div>
+                                        </div>
+                                    </div>
+                                    <div class="learning-track-card" onclick="loadLearningTrack('intermediate', this)">
+                                        <div class="track-icon">🔊</div>
+                                        <div class="track-info">
+                                            <div class="track-level">INTERMEDIATE TRACK (202)</div>
+                                            <div class="track-title" style="font-size: 0.7rem;">Mumbai Synth Soundboard</div>
+                                        </div>
+                                    </div>
+                                    <div class="learning-track-card" onclick="loadLearningTrack('intermediate_animator', this)">
+                                        <div class="track-icon">🛹</div>
+                                        <div class="track-info">
+                                            <div class="track-level">INTERMEDIATE ANIMATION (203)</div>
+                                            <div class="track-title" style="font-size: 0.7rem;">Pixel Skater Animator</div>
+                                        </div>
+                                    </div>
+                                    <div class="learning-track-card" onclick="loadLearningTrack('pro', this)">
+                                        <div class="track-icon">🚀</div>
+                                        <div class="track-info">
+                                            <div class="track-level">PRO APP TRACK (303)</div>
+                                            <div class="track-title" style="font-size: 0.7rem;">Bandra Cutting Chai Clicker</div>
+                                        </div>
+                                    </div>
+                                    <div class="learning-track-card" onclick="loadLearningTrack('pro_canvas', this)">
+                                        <div class="track-icon">🛺</div>
+                                        <div class="track-info">
+                                            <div class="track-level">PRO CANVAS GAME (404)</div>
+                                            <div class="track-title" style="font-size: 0.7rem;">Retro Canvas Rickshaw Drift</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Steps & Tutorial Guidance Box -->
+                                <div class="tutorial-guidance-box" style="margin-top: 15px;">
+                                    <h4 style="font-size: 0.75rem;">💡 STEP-BY-STEP CHALLENGE</h4>
+                                    <div id="tutorial-steps-text" class="tutorial-steps-text" style="font-size: 0.72rem; line-height: 1.35;">
+                                        <!-- Steps load dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Middle/Right Side: Live Code Workspace & Previewer -->
+                            <div class="learning-workspace">
+                                <div class="workspace-header-row">
+                                    <span class="workspace-tab">✍️ CODE_PLAYGROUND.html</span>
+                                    <div class="workspace-actions">
+                                        <button class="workspace-btn btn-reset-code" onclick="resetLearningEditor()">🔄 RESTORE</button>
+                                        <button class="workspace-btn btn-run-code" onclick="runSandboxCode()">⚡ RUN & PREVIEW</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Real Editor Workspace -->
+                                <div class="editor-outer-frame">
+                                    <div class="editor-line-numbers">
+                                        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
+                                    </div>
+                                    <textarea id="sandboxCodeEditor" class="sandbox-code-editor" spellcheck="false" oninput="syncEditorLines()"></textarea>
+                                </div>
+                                
+                                <!-- Real Instant Visual Previewer -->
+                                <div class="previewer-outer-frame">
+                                    <div class="previewer-header">
+                                        <span class="previewer-dot-red"></span>
+                                        <span class="previewer-dot-yellow"></span>
+                                        <span class="previewer-dot-green"></span>
+                                        <span class="previewer-title">🖥️ LIVE CHROME SIMULATOR</span>
+                                    </div>
+                                    <div class="previewer-body">
+                                        <iframe id="learningSandboxPreview" class="learning-sandbox-preview"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Creative Showcase Submission Modal Form Overlay -->
+                    <div id="showcaseSubmitModal" class="showcase-submit-overlay" style="display: none;">
+                        <div class="submit-modal-box">
+                            <h3 style="color:#ff008c; text-shadow:0 0 10px rgba(255,0,140,0.3)">🚀 PUBLISH TO GALLERY</h3>
+                            <p style="color:#ccc; font-size:12px; margin-top:4px;">Share your customized web app with the entire Bandra community!</p>
+                            
+                            <div class="submit-form-group" style="margin-top:14px;">
+                                <label style="font-weight:900; font-size:10px; color:var(--pink);">APP / PROJECT TITLE</label>
+                                <input type="text" id="submitAppTitle" placeholder="e.g., Pink Sunset Rickshaw" maxlength="24" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); padding:8px; border-radius:6px; color:#fff; font-size:13px; outline:none;">
+                            </div>
+                            <div class="submit-form-group">
+                                <label style="font-weight:900; font-size:10px; color:var(--pink);">CREATOR HANDLE / NAME</label>
+                                <input type="text" id="submitAppAuthor" placeholder="e.g., Dev_Bandra_07" maxlength="18" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); padding:8px; border-radius:6px; color:#fff; font-size:13px; outline:none;">
+                            </div>
+                            <div class="submit-form-group">
+                                <label style="font-weight:900; font-size:10px; color:var(--pink);">APP ICON / GRAPHIC EMOJI</label>
+                                <input type="text" id="submitAppEmoji" value="🎨" placeholder="e.g., 🎨" maxlength="2" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); padding:8px; border-radius:6px; color:#fff; font-size:13px; outline:none; width: 60px; text-align: center;">
+                            </div>
+                            
+                            <div class="submit-form-actions" style="display:flex; gap:10px; margin-top:20px;">
+                                <button class="submit-cancel-btn" onclick="closeShowcaseSubmitModal()" style="flex:1; background:rgba(255,255,255,0.08); border:none; padding:10px; color:#ccc; border-radius:6px; font-weight:bold; cursor:pointer;">CANCEL</button>
+                                <button class="submit-confirm-btn" onclick="confirmShowcaseSubmit()" style="flex:1; background:var(--pink); border:none; padding:10px; color:#fff; border-radius:6px; font-weight:bold; cursor:pointer;">PUBLISH WORK</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Course Details Modal overlay -->
+                    <div id="courseDetailModal" class="showcase-submit-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 3, 12, 0.9); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(8px);">
+                        <div style="background: #0f0b21; border: 2.5px solid var(--yellow); border-radius: 16px; padding: 24px; width: 90%; max-width: 440px; box-shadow: 0 10px 40px rgba(255, 230, 0, 0.15); position: relative; display: flex; flex-direction: column;">
+                            <button onclick="closeCourseDetails()" style="position: absolute; top: 16px; right: 16px; background: none; border: none; color: #fff; font-size: 1.1rem; cursor: pointer;">✕</button>
+                            
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                                <span id="courseModalIcon" style="font-size: 2.2rem; background: rgba(255,255,255,0.05); border-radius: 10px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;">🎨</span>
+                                <div style="display: flex; flex-direction: column;">
+                                    <div id="courseModalTrack" style="font-size: 0.65rem; font-weight: 800; color: var(--cyan); letter-spacing: 1.5px; text-transform: uppercase; font-family: monospace;">TRACK LEVEL</div>
+                                    <h3 id="courseModalTitle" style="color: #fff; font-size: 1.1rem; font-weight: 800; margin: 0; letter-spacing: 0.5px; font-family: 'Inter', sans-serif;">COURSE TITLE</h3>
+                                </div>
+                            </div>
+                            
+                            <p id="courseModalDesc" style="color: rgba(255,255,255,0.7); font-size: 0.82rem; margin: 0 0 16px 0; line-height: 1.4; font-family: 'Inter', sans-serif;">Course overview description...</p>
+                            
+                            <h4 style="color: var(--yellow); font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px; margin: 0 0 10px 0; font-family: monospace;">📋 SYLLABUS & LECTURE OUTLINE</h4>
+                            <div id="courseModalSyllabus" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; font-family: 'Inter', sans-serif;">
+                                <!-- syllabus outline goes here -->
+                            </div>
+                            
+                            <div style="display: flex; gap: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; align-items: center; justify-content: space-between;">
+                                <div style="font-family: monospace; font-size: 0.72rem; color: rgba(255,255,255,0.5);">
+                                    🎓 PROFESSOR: <strong id="courseModalProf" style="color: #fff;">Kabir_X</strong>
+                                </div>
+                                <button id="courseModalBtn" style="background: linear-gradient(135deg, var(--yellow), #ffa200); border: none; border-radius: 8px; color: #000; font-weight: 900; font-size: 0.75rem; padding: 10px 18px; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 10px rgba(255,230,0,0.25); text-transform: uppercase;">START TRACK ➔</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ============================================================
+         3. CINEMATIC TIMELINE SEQUENCE & HARD CORE LOGIC
+         ============================================================ -->
+
+    <!-- Global / Shared State & Config -->
+    <script src="js/config.js"></script>
+
+    <!-- Sound & Synthesizers System -->
+    <script src="js/audio.js"></script>
+
+    <!-- Sections: Webtoons & Deals -->
+    <script src="js/webtoons.js"></script>
+    <script src="js/deals.js"></script>
+
+    <!-- Arcade Games Core -->
+    <script src="games/arcade_core.js"></script>
+
+    <!-- Arcade Games Cabinet Collection -->
+    <script src="games/train_snake.js"></script>
+    <script src="games/rickshaw_sudoku.js"></script>
+    <script src="games/carter_chess.js"></script>
+    <script src="games/mount_mary_pacman.js"></script>
+    <script src="games/rickshaw_rage.js"></script>
+    <script src="games/bandra_ludo.js"></script>
+
+    <!-- Cinematic Intro experience -->
+    <script src="js/intro.js"></script>
+
+    <!-- Kids Interactive Coding Sandbox & Showcase -->
+    <script src="js/learning.js"></script>
+
+    <!-- Core Main controller & init -->
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "Bandra Hustlers",
+  "description": "An interactive, highly polished, cinematic experience of Bandra, Mumbai's street culture, creators, and local hustle.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
